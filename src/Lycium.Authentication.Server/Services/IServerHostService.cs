@@ -46,7 +46,6 @@ namespace Lycium.Authentication
         }
 
 
-
         /// <summary>
         /// 检查主机是否合法，并匹配Token, 匹配返回主机信息，不匹配返回空
         /// </summary>
@@ -65,7 +64,6 @@ namespace Lycium.Authentication
             }
             return null;
         }
-
 
 
         /// <summary>

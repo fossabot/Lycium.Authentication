@@ -1,13 +1,8 @@
-﻿using System;
+﻿using Lycium.Authentication.Common;
+using Lycium.Authentication.Server.Notify;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Lycium.Authentication.Common;
-using Lycium.Authentication.Server.Notify;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization.Internal;
 
 namespace Lycium.Authentication.Server.Controllers
 {
