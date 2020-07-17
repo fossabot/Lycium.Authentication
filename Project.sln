@@ -15,17 +15,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9A154FFA-A8A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchmarkProject", "test\BenchmarkProject\BenchmarkProject.csproj", "{BADB6031-8605-40B4-94BF-96256438A77C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lycium.Authentication.Common", "Lycium.Authentication.Common\Lycium.Authentication.Common.csproj", "{4FB142D6-5284-4E20-BAC6-D1C98207E106}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lycium.Authentication.Common", "src\Lycium.Authentication.Common\Lycium.Authentication.Common.csproj", "{4FB142D6-5284-4E20-BAC6-D1C98207E106}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lycium.Authentication.Server", "Lycium.Authentication.Server\Lycium.Authentication.Server.csproj", "{6D3475C5-23F5-4841-B0FC-EEA17526EAA4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lycium.Authentication.Server", "src\Lycium.Authentication.Server\Lycium.Authentication.Server.csproj", "{6D3475C5-23F5-4841-B0FC-EEA17526EAA4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lycium.Authentication.Client", "Lycium.Authentication.Client\Lycium.Authentication.Client.csproj", "{5E5AE21A-E57C-4DE7-B4B2-F724EBB86329}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lycium.Authentication.Client", "src\Lycium.Authentication.Client\Lycium.Authentication.Client.csproj", "{5E5AE21A-E57C-4DE7-B4B2-F724EBB86329}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LyciumFreesqlServer", "LyciumFreesqlServer\LyciumFreesqlServer.csproj", "{E5AFCC6D-DA17-4304-967D-D45FA6EEC026}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LyciumFreesqlServer", "samples\LyciumFreesqlServer\LyciumFreesqlServer.csproj", "{E5AFCC6D-DA17-4304-967D-D45FA6EEC026}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PgEntityToDB", "PgEntityToDB\PgEntityToDB.csproj", "{4FC6ECB1-8FB3-4177-A212-AFCEA306B8B0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PgEntityToDB", "samples\PgEntityToDB\PgEntityToDB.csproj", "{4FC6ECB1-8FB3-4177-A212-AFCEA306B8B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LyciumFreesqlClient", "LyciumFreesqlClient\LyciumFreesqlClient.csproj", "{D88595CF-5EA1-404C-995B-B40C744C7AA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LyciumFreesqlClient", "samples\LyciumFreesqlClient\LyciumFreesqlClient.csproj", "{D88595CF-5EA1-404C-995B-B40C744C7AA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
