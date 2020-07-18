@@ -64,9 +64,10 @@ namespace LyciumFreesqlServer.Services
 
         public override bool UpdateHost(LyciumHost host)
         {
-            var repository = _freeSql.GetRepository<LyciumConfig>();
-            var item = repository.Where(item => item.Id == host.Id).First();
-            return repository.Update(item) == 1;
+            var repository = _freeSql.GetRepository<LyciumHost>();
+            var result = repository.Where(item => item.Id == host.Id).First();
+            repository.Attach(result);
+            return repository.Update(host) == 1;
         }
 
         public override LyciumHost GetHostById(long id)

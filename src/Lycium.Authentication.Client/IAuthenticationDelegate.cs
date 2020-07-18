@@ -7,5 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection
     public interface IAuthenticationDelegate
     {
         Task PipelineDelegate(HttpContext context, Func<Task> next);
+
+        void HasSync(HttpContext context = null);
     }
 }

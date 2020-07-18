@@ -27,7 +27,7 @@ namespace LyciumFreesqlClient.Services
 
             try
             {
-                var result = _request.GetStringAsync("host/refreshToken").Result;
+                var result = _request.GetStringAsync("api/Host/refreshToken").Result;
                 var instance = JsonSerializer.Deserialize<(string Token, long alivaTime, long createTime)>(result);
                 if (result != default)
                 {
@@ -37,20 +37,13 @@ namespace LyciumFreesqlClient.Services
                         , instance.createTime);
                     return true;
                 }
-                else
-                {
-                    throw new Exception("无法从服务端获取信息，请检查网络与服务端！");
-                }
-                
 
             }
             catch (Exception ex)
             {
 
-                throw new Exception("无法刷新 Token 请检查网络，错误信息：" + ex.Message);
-
             }
-            
+            return false;
         }
 
     }

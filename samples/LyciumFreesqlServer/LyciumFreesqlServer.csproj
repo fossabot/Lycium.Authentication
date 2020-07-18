@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lycium.Authentication.Server\Lycium.Authentication.Server.csproj" />
+    <ProjectReference Include="..\..\src\Lycium.Authentication.Server\Lycium.Authentication.Server.csproj" />
   </ItemGroup>
 
 

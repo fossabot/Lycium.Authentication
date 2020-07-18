@@ -21,7 +21,7 @@ namespace LyciumFreesqlServer.Services
             {
                 freeSql.CodeFirst.ConfigEntity<LyciumResource>
                 (
-                       item => item.Property(item => item.Id).IsIdentity(true)
+                     item => item.Property(item => item.Id).IsIdentity(true)
                 );
                 InitAction = null;
             };
@@ -92,29 +92,21 @@ namespace LyciumFreesqlServer.Services
             return _freesql.Select<LyciumResource>().Where(item => item.Cid == hostId).ToList();
         }
 
-        public override bool SetResourceAsBlacklist(params LyciumResource[] resources)
-        {
-            //通知客户端
-            return SetResourceStatus(false, resources.Select(item => item.Id).ToArray());
-        }
 
         public override bool SetResourceAsBlacklist(params long[] resources)
         {
-            //通知客户端
             return SetResourceStatus(false, resources);
         }
 
-        public override bool SetResourceAsWhitelist(params LyciumResource[] resources)
-        {
-            //通知客户端
-            return SetResourceStatus(true, resources.Select(item => item.Id).ToArray());
-        }
 
         public override bool SetResourceAsWhitelist(params long[] resources)
         {
-            //通知客户端
             return SetResourceStatus(true, resources);
         }
+
+
+
+
 
         /// <summary>
         /// 批量设置资源状态
@@ -132,5 +124,10 @@ namespace LyciumFreesqlServer.Services
                 .ExecuteAffrows() == resources.Length;
         }
 
+
+        public override IEnumerable<string> GetWhitelist(params long[] resources)
+        {
+            return _freesql.Select<LyciumResource>().Where(item => resources.Contains(item.Id)).ToList(item => item.Resource);
+        }
     }
 }

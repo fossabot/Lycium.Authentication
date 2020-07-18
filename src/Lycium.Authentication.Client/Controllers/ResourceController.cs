@@ -1,4 +1,5 @@
 ﻿using Lycium.Authentication.Controllers;
+using Lycium.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Net;
@@ -14,6 +15,12 @@ namespace Lycium.Authentication.Controllers
         public ResourceController(IClientResourceService resourceService)
         {
             _resourceService = resourceService;
+        }
+
+        [HttpPost("get/whitelist")]
+        public IEnumerable<string> GetWhitelist()
+        {
+            return ClientConfiguration.Whitelist;
         }
 
 

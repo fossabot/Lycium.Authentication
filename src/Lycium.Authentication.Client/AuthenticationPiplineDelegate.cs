@@ -1,10 +1,13 @@
 ﻿using Lycium.Authentication;
 using Lycium.Configuration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using System;
 using System.Net;
+using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 
 namespace Microsoft.Extensions.DependencyInjection
@@ -12,7 +15,18 @@ namespace Microsoft.Extensions.DependencyInjection
 
     public class AuthenticationPiplineDelegate : IAuthenticationDelegate
     {
+
         //private readonly IContextInfoService _info;
+        private static readonly object _syncLock;
+        private static readonly JsonSerializerOptions _option;
+        static AuthenticationPiplineDelegate()
+        {
+            _syncLock = new object();
+            _option = new JsonSerializerOptions();
+            _option.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
+        }
+
+
         private readonly IClientResourceService _resourceService;
         private readonly IClientHostService _hostService;
 
@@ -50,62 +64,10 @@ namespace Microsoft.Extensions.DependencyInjection
 
 
                 //检测路由是否在白名单中，在的话放行
-                if (!_resourceService.IsInWhtelist(resource))  
+                if (!_resourceService.IsInWhtelist(resource))
                 {
 
-                    //是否与服务器已经通步过
-                    if (!ClientConfiguration.HasSync)
-                    {
-
-                        //心跳检测
-                        if (ClientConfiguration.CheckHeartbeat())
-                        {
-
-                            //刷新HostToken
-                            if (!_hostService.RefreshToken())
-                            {
-
-                                //Token刷新不通过
-                                context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                                await context.Response.WriteAsync(
-                                    JsonSerializer.Serialize(
-                                        new { code = 5001, msg = $"服务端刷新Token失败，请核对主机与服务端信息！" })
-                                    );
-
-                            }
-                            else
-                            {
-
-                                //同步服务器白名单
-                                if (!_resourceService.SyncResources())
-                                {
-
-                                    //同步白名单不通过
-                                    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                                    await context.Response.WriteAsync(
-                                        JsonSerializer.Serialize(
-                                            new { code = 5002, msg = $"服务端获取白名单资源失败，请核对主机与服务端信息！" })
-                                        );
-
-                                }
-
-                            }
-
-                        }
-                        else
-                        {
-
-                            //心跳检测不通过
-                            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-                            await context.Response.WriteAsync(
-                                JsonSerializer.Serialize(
-                                    new { code = 5000, msg = "心跳检测失败， 无法联通服务端，请检测网络和服务的！" })
-                                );
-
-                        }
-                        
-
-                    }
+                    HasSync(context);
 
                     #region Token认证
                     //从上下文中获取Token
@@ -281,6 +243,7 @@ namespace Microsoft.Extensions.DependencyInjection
                     #endregion
 
 
+                    await next.Invoke();
                 }
                 else
                 {
@@ -299,5 +262,76 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
 
+        public void ReturnMessage(HttpContext context, int code, string message)
+        {
+
+            if (context!=null)
+            {
+                var result = JsonSerializer.Serialize(
+                new
+                {
+                    code = 5000,
+                    msg = message
+
+                }, _option);
+                context.Response.WriteAsync(result).GetAwaiter().GetResult();
+            }
+            
+        }
+
+
+        public void HasSync(HttpContext context = null)
+        {
+            //是否与服务器已经通步过
+            if (!ClientConfiguration.HasSync)
+            {
+
+                lock (_syncLock)
+                {
+
+                    if (!ClientConfiguration.HasSync)
+                    {
+
+                        //心跳检测
+                        if (ClientConfiguration.CheckHeartbeat())
+                        {
+
+                            //刷新HostToken
+                            if (!_hostService.RefreshToken())
+                            {
+
+                                ReturnMessage(context, 5001, "服务端刷新Token失败，请核对主机与服务端信息！");
+
+                            }
+                            else
+                            {
+
+                                //同步服务器白名单
+                                if (!_resourceService.SyncResources())
+                                {
+                                    ReturnMessage(context, 5002, "服务端获取白名单资源失败，请核对主机与服务端信息！");
+                                }
+                                else
+                                {
+                                    ClientConfiguration.HasSync = true;
+                                }
+
+                            }
+
+                        }
+                        else
+                        {
+
+                            //心跳检测不通过
+                            ReturnMessage(context, 5000, "与服务器联通失败，请检查网络和服务端！");
+                        }
+                    }
+
+
+                }
+
+            }
+
+        }
     }
 }

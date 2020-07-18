@@ -53,19 +53,7 @@ namespace Lycium.Configuration
 
                     client.BaseAddress = new Uri(ServerUrl);
                     var result = client.GetAsync("api/Heartbeat").Result;
-                    if (result.StatusCode != HttpStatusCode.OK)
-                    {
-
-                        throw new Exception("未与服务器建立良好链接, 请检查网络通路状态并于管理员联系!");
-
-                    }
-                    else
-                    {
-
-                        HasSync = true;
-
-                    }
-                    return HasSync;
+                    return result.StatusCode == HttpStatusCode.OK;
 
                 }
 

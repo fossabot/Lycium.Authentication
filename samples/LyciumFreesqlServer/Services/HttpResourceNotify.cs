@@ -17,12 +17,12 @@ namespace LyciumFreesqlServer.Services
         }
         public override HttpStatusCode BacklistNotify(LyciumHost host, IEnumerable<string> resources)
         {
-            return _request.Post<IEnumerable<string>, HttpStatusCode>(host, "Resource/set/backlist", resources).Result;
+            return _request.Post<IEnumerable<string>, HttpStatusCode>(host, "api/Resource/set/backlist", resources).Result;
         }
 
         public override HttpStatusCode WhitelistNotify(LyciumHost host, IEnumerable<string> resources)
         {
-            return _request.Post<IEnumerable<string>, HttpStatusCode>(host, "Resource/set/whitelist", resources).Result;
+            return _request.Post<IEnumerable<string>, HttpStatusCode>(host, "api/Resource/set/whitelist", resources).Result;
         }
 
     }

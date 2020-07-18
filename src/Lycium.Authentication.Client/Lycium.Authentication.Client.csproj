@@ -6,12 +6,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lycium.Authentication.Common\Lycium.Authentication.Common.csproj" />
+    <Compile Remove="Model\**" />
+    <Compile Remove="Notify\**" />
+    <Content Remove="Model\**" />
+    <Content Remove="Notify\**" />
+    <EmbeddedResource Remove="Model\**" />
+    <EmbeddedResource Remove="Notify\**" />
+    <None Remove="Model\**" />
+    <None Remove="Notify\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Model\" />
-    <Folder Include="Notify\" />
+    <ProjectReference Include="..\Lycium.Authentication.Common\Lycium.Authentication.Common.csproj" />
   </ItemGroup>
 
 </Project>

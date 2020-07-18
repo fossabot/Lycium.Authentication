@@ -100,13 +100,13 @@ namespace Lycium.Authentication.Server.Controllers
         /// <param name="resources">资源</param>
         /// <returns></returns>
         [HttpPost("set/whitelist")]
-        public object SetWhitelist(long cid, params LyciumResource[] resources)
+        public object SetWhitelist(long cid, params long[] resources)
         {
 
             if (_resourceService.SetResourceAsWhitelist(resources))
             {
                 var host = _hostService.GetHostById(cid);
-                var code = _resourceNotify.WhitelistNotify(host, resources.Select(item => item.Resource));
+                var code = _resourceNotify.WhitelistNotify(host, _resourceService.GetWhitelist(resources));
                 if (code == System.Net.HttpStatusCode.OK)
                 {
                     return new { code = 0, msg = "更新成功，通知成功！" };
@@ -129,13 +129,13 @@ namespace Lycium.Authentication.Server.Controllers
         /// <param name="resources">资源</param>
         /// <returns></returns>
         [HttpPost("set/backlist")]
-        public object SetBacklist(long cid, params LyciumResource[] resources)
+        public object SetBacklist(long cid, params long[] resources)
         {
 
             if (_resourceService.SetResourceAsBlacklist(resources))
             {
                 var host = _hostService.GetHostById(cid);
-                var code = _resourceNotify.BacklistNotify(host, resources.Select(item => item.Resource));
+                var code = _resourceNotify.BacklistNotify(host, _resourceService.GetWhitelist(resources));
                 if (code == System.Net.HttpStatusCode.OK)
                 {
                     return new { code = 0, msg = "更新成功，通知成功！" };
