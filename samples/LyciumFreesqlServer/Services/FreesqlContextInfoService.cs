@@ -12,6 +12,11 @@ namespace LyciumFreesqlServer.Services
             context.Response.Headers[LyciumConfiguration.USER_TOKEN] = "";
         }
 
+        public override long GetGidFromContext(HttpContext context)
+        {
+            return Convert.ToInt64(context.Request.Headers[LyciumConfiguration.USER_GID]);
+        }
+
         public override string GetHostTokenFromContext(HttpContext context)
         {
             return context.Request.Headers[LyciumConfiguration.HOST_TOKEN];

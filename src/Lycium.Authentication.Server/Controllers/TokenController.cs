@@ -24,7 +24,7 @@ namespace Lycium.Authentication.Server.Controllers
             IHostService host,
             ITokenService token,
             IContextInfoService info,
-            IEntitySetter<LyciumToken> setter, 
+            IEntitySetter<LyciumToken> setter,
             IEntityGetter<LyciumToken> getter
             ) : base(setter, getter)
         {
@@ -88,7 +88,7 @@ namespace Lycium.Authentication.Server.Controllers
 
         [HttpGet("Login/{uid}")]
         public async Task<LyciumToken> Login(long uid)
-         {
+        {
 
             //客户端检测，如果通过则放行
             var host = _host.GetHost(HttpContext);
@@ -96,7 +96,7 @@ namespace Lycium.Authentication.Server.Controllers
             {
                 throw new System.Exception($"主机校验失败!主机名为{_info.GetHostName(HttpContext)}!");
             }
-            if (_host.CheckHost(HttpContext,host))
+            if (_host.CheckHost(HttpContext, host))
             {
 
                 //获取服务端当前Token
@@ -104,11 +104,11 @@ namespace Lycium.Authentication.Server.Controllers
                 if (serverToken == default)
                 {
                     //没有Token
-                    var token =_token.CreateAndNotifyToken(uid);
+                    var token = _token.CreateAndNotifyToken(uid);
                     return token;
 
                 }
-                else 
+                else
                 {
 
                     if (serverToken.IsAlive)
@@ -133,7 +133,7 @@ namespace Lycium.Authentication.Server.Controllers
                         var token = _token.LogoutAndCreateToken(uid);
                         return token;
                     }
-                    
+
 
                 }
 
@@ -173,7 +173,7 @@ namespace Lycium.Authentication.Server.Controllers
                 {
                     return HttpStatusCode.Unauthorized;
                 }
-                
+
             }
             else
             {

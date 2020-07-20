@@ -24,7 +24,7 @@ namespace Lycium.Authentication.Common
 
         }
 
-
+        public long Gid { get; set; }
         public long Uid { get; set; }
         public string PreContent { get; set; }
         public string Content { get; set; }

@@ -41,6 +41,13 @@ namespace Lycium.Authentication
         /// <returns></returns>
         public abstract long GetUidFromContext(HttpContext context);
 
+        /// <summary>
+        /// 从HttpContext中获取节点组Gid
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        public abstract long GetGidFromContext(HttpContext context);
+
 
         /// <summary>
         /// 从HttpContext中获取主机名
