@@ -21,7 +21,7 @@ namespace Lycium.Authentication
         /// 合法性检测实现
         /// </summary>
         /// <returns></returns>
-        public static string ConnectedInfoFromServer()
+        public static string InfoFromServer(string action)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace Lycium.Authentication
                 client.BaseAddress = new Uri(ClientConfiguration.ServerUrl);
                 client.DefaultRequestHeaders.Add(LyciumConfiguration.SECRET_KEY, ClientConfiguration.SecretKey);
                 client.DefaultRequestHeaders.Add(LyciumConfiguration.HOST_TOKEN, ClientConfiguration.HostToken);
-                var result = client.GetStringAsync("api/HostDebug").Result;
+                var result = client.GetStringAsync("api/HostDebug/"+action).Result;
                 return result;
 
             }

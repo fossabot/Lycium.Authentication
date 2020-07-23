@@ -1,5 +1,4 @@
-﻿using Lycium.Authentication.Controllers;
-using Lycium.Configuration;
+﻿using Lycium.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Net;
