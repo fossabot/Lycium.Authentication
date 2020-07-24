@@ -1,6 +1,5 @@
 ﻿using Lycium.Authentication.Common;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Hosting;
 using System.Collections.Generic;
 
 namespace Lycium.Authentication
@@ -99,7 +98,7 @@ namespace Lycium.Authentication
         /// 根据主机名模糊查询主机列表
         /// </summary>
         /// <returns></returns>
-        public abstract LyciumHost NameQuery(string hostName);
+        public abstract LyciumHost SecretKeyQuery(string hostName);
 
 
         /// <summary>
@@ -108,5 +107,6 @@ namespace Lycium.Authentication
         /// <param name="lyciumHost"></param>
         /// <returns></returns>
         public abstract bool UpdateHost(LyciumHost lyciumHost);
+
     }
 }

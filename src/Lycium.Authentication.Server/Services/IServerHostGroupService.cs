@@ -14,7 +14,7 @@ namespace Lycium.Authentication
         /// 根据组ID获取主机
         /// </summary>
         /// <returns></returns>
-        public abstract IEnumerable<LyciumHost> GetHostsByGroupId(long gid);
+        public abstract IEnumerable<string> GetHostsUrlByGroupId(long gid);
 
         /// <summary>
         /// 增加主机到群组

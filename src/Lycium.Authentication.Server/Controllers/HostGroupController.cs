@@ -1,10 +1,7 @@
-﻿using Lycium.Authentication.Common;
-using Lycium.Authentication.Controllers;
+﻿using Lycium.Authentication.Controllers;
 using Lycium.Authentication.Model;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Net;
 
 namespace Lycium.Authentication.Server.Controllers
 {
@@ -58,14 +55,14 @@ namespace Lycium.Authentication.Server.Controllers
 
 
         /// <summary>
-        /// 获取该组下所有主机
+        /// 获取该组下所有主机地址
         /// </summary>
         /// <param name="gid">组ID</param>
         /// <returns></returns>
         [HttpGet("group/host/query/{gid}")]
-        public IEnumerable<LyciumHost> GetHosts(long gid)
+        public IEnumerable<string> GetHosts(long gid)
         {
-            return _groupService.GetHostsByGroupId(gid);
+            return _groupService.GetHostsUrlByGroupId(gid);
         }
 
 

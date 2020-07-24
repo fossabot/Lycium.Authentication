@@ -1,11 +1,7 @@
 ﻿using Lycium.Authentication;
 using Lycium.Authentication.Common;
-using Lycium.Authentication.Server.Model;
-using Microsoft.VisualBasic.CompilerServices;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LyciumFreesqlServer.Services
 {
@@ -57,7 +53,7 @@ namespace LyciumFreesqlServer.Services
             return _freeSql.Insert(host).ExecuteAffrows() == 1;
         }
 
-        public override LyciumHost NameQuery(string hostName)
+        public override LyciumHost SecretKeyQuery(string hostName)
         {
             return _freeSql.Select<LyciumHost>().Where(item => item.HostName == hostName).First();
         }
