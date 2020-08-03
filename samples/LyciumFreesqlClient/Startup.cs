@@ -47,7 +47,7 @@ namespace LyciumFreesqlClient
                 .SetSecretKey("fd4685a2-b78f-4dda-9d59-5d420410cf96"));
 
             services.AddSingleton(p => new FreeSql.FreeSqlBuilder()
-                                                            .UseConnectionString(FreeSql.DataType.PostgreSQL,"")
+                                                            .UseConnectionString(FreeSql.DataType.PostgreSQL, "")
                                                             //.UseAutoSyncStructure(true) //自动迁移实体的结构到数据库
                                                             .Build());
 

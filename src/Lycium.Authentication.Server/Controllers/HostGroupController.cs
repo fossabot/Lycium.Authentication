@@ -78,6 +78,16 @@ namespace Lycium.Authentication.Server.Controllers
         }
 
 
+        /// <summary>
+        /// 查询主机是否在组中
+        /// </summary>
+        /// <param name="group">新增一个组</param>
+        /// <returns></returns>
+        [HttpPost("group/exist")]
+        public bool QueryExistHost(long cid,long gid)
+        {
+            return _groupService.IsExistHostInGroup(cid,gid);
+        }
     }
 
 }

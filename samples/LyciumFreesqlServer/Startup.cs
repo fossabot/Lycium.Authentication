@@ -42,7 +42,7 @@ namespace LyciumFreesqlServer
 
             services.AddSingleton(p => new FreeSql.FreeSqlBuilder()
                                                             .UseConnectionString(FreeSql.DataType.PostgreSQL, "")
-                                                            // .UseAutoSyncStructure(true) //自动迁移实体的结构到数据库
+                                                            .UseAutoSyncStructure(true) //自动迁移实体的结构到数据库
                                                             .Build());
 
 
@@ -51,6 +51,7 @@ namespace LyciumFreesqlServer
             services.AddScoped<IServerHostService, FreeSqlServerHostService>();
             services.AddScoped<IContextInfoService, FreesqlContextInfoService>();
             services.AddScoped<IServerResourceService, FreeSqlServerResourceService>();
+            services.AddScoped<IServerHostGroupService, FreeSqlServerHostGroupService>();
             services.AddScoped<IResourceNotify, HttpResourceNotify>();
             services.AddScoped<LyciumRequest>();
 

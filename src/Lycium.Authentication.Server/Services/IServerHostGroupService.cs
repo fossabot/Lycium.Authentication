@@ -45,5 +45,14 @@ namespace Lycium.Authentication
         /// <returns></returns>
         public abstract bool DeletedGroup(long gid);
 
+
+        /// <summary>
+        /// 查询主机是否在组中
+        /// </summary>
+        /// <param name="cid"></param>
+        /// <param name="gid"></param>
+        /// <returns></returns>
+        public abstract bool IsExistHostInGroup(long cid, long gid);
+
     }
 }

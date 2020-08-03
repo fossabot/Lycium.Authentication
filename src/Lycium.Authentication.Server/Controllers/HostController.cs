@@ -22,32 +22,6 @@ namespace Lycium.Authentication.Server.Controllers
         }
 
 
-        [HttpGet("group/add/{cid}/{gid}")]
-        public LyciumHost AddToGroup(long cid, long gid)
-        {
-
-        }
-        [HttpGet("group/modify/{cid}/{gid}")]
-        public LyciumHost ModifyGroup(long cid, long gid)
-        {
-
-        }
-        [HttpGet("group/query/{page}/{size}/{cid}/{gid}")]
-        public IEnumerable<LyciumHost> QueryPageGroup(long cid, long gid)
-        {
-
-        }
-        [HttpGet("group/query/{page}/{size}/{cid}/{gid}")]
-        public LyciumHost QuerySingleGroup(long cid, long gid)
-        {
-
-        }
-        [HttpGet("group/delete/{cid}/{gid}")]
-        public LyciumHost DeleteFromGroup(long cid, long gid)
-        {
-
-        }
-
         /// <summary>
         /// 添加一个主机
         /// </summary>

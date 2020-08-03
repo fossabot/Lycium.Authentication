@@ -3,8 +3,6 @@ using Lycium.Authentication.Common;
 using Lycium.Authentication.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LyciumFreesqlServer.Services
 {
@@ -94,6 +92,21 @@ namespace LyciumFreesqlServer.Services
                 .InnerJoin((host,relation) => host.Id == relation.Cid)
                 .Where((host, relation) => relation.Gid == gid)
                 .ToList((host,relation) =>host.HostUrl);
+        }
+
+
+        /// <summary>
+        /// 查询主机是否在组中
+        /// </summary>
+        /// <param name="cid"></param>
+        /// <param name="gid"></param>
+        /// <returns></returns>
+        public override bool IsExistHostInGroup(long cid, long gid)
+        {
+            return _freeSql
+                .Select<LyciumHostRelation>()
+                .Where(relation => relation.Cid == cid && relation.Gid == gid)
+                .First() != null;
         }
     }
 }
