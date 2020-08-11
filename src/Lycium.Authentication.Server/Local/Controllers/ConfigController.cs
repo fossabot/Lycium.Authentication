@@ -17,7 +17,7 @@ namespace Lycium.Authentication.Server.Controllers
             _configService = configService;
         }
 
-
+        //***********************************Step 1.5: 创建Token认证配置 给节点用****************************//
         /// <summary>
         /// 创建一个新的 config 
         /// </summary>

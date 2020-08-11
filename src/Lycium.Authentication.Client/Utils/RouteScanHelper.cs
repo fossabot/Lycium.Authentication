@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Routing;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Lycium.Utils
+namespace Lycium.Authentication.Utils
 {
     public static class RouteScanHelper
     {

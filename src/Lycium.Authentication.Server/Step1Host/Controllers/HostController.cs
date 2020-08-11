@@ -22,6 +22,7 @@ namespace Lycium.Authentication.Server.Controllers
         }
 
 
+        //***********************************Step 1: 创建主机并自动分配 SecretKey****************************//
         /// <summary>
         /// 添加一个主机
         /// </summary>
@@ -43,10 +44,11 @@ namespace Lycium.Authentication.Server.Controllers
         [HttpPost("modify")]
         public HttpStatusCode Modify(LyciumHost host)
         {
-            return _hostService.UpdateHost(host) ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
+            return _hostService.ModifyHost(host) ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
         }
 
 
+        //***********************************Step 2: 节点开机,认证 SecretKey 并分配Token****************************//
         /// <summary>
         /// 刷新Token
         /// </summary>
@@ -64,7 +66,7 @@ namespace Lycium.Authentication.Server.Controllers
                     host.TokenAliveTime = config.TokenAlivaTime;
                     host.TokenCreateTime = (DateTime.Now.ToUniversalTime().Ticks - 621355968000000000) / 10000000;
                     host.HostToken = Guid.NewGuid().ToString();
-                    if (_hostService.UpdateHost(host))
+                    if (_hostService.ModifyHost(host))
                     {
                         return new { host.HostToken, host.TokenAliveTime,host.TokenCreateTime };
                     }
@@ -89,7 +91,7 @@ namespace Lycium.Authentication.Server.Controllers
                 if (config != null)
                 {
                     host.HostUrl = url;
-                    if (_hostService.UpdateHost(host))
+                    if (_hostService.ModifyHost(host))
                     {
                         return HttpStatusCode.OK;
                     }

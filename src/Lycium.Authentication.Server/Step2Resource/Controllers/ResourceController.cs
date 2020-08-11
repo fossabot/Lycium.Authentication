@@ -2,7 +2,6 @@
 using Lycium.Authentication.Server.Notify;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Lycium.Authentication.Server.Controllers
 {
@@ -15,21 +14,19 @@ namespace Lycium.Authentication.Server.Controllers
         private readonly IServerHostService _hostService;
         private readonly IServerResourceService _resourceService;
         private readonly IResourceNotify _resourceNotify;
-        private readonly IContextInfoService _infoService;
         public ResourceController(
             IServerHostService hostService, 
             IServerResourceService resourceService, 
-            IResourceNotify resourceNotify,
-            IContextInfoService infoService
+            IResourceNotify resourceNotify
             )
         {
             _hostService = hostService;
             _resourceService = resourceService;
             _resourceNotify = resourceNotify;
-            _infoService = infoService;
         }
 
 
+        //***********************************Step 4: 节点上传本地资源****************************//
         /// <summary>
         /// 客户端上传资源,并返回白名单
         /// </summary>
@@ -38,13 +35,17 @@ namespace Lycium.Authentication.Server.Controllers
         [HttpPost]
         public IEnumerable<string> AddResrouce(params string[] resources)
         {
-            var secretKey = _infoService.GetSecretKeyFromContext(HttpContext);
-            var host = _hostService.GetHostBySecretKey(secretKey);
-            if (_resourceService.AddResources(host, resources))
+
+            var host = _hostService.OperationCheck(HttpContext);
+            if (host != null)
             {
-                return _resourceService.GetAllWhitelist(host.Id);
+                if (_resourceService.AddResources(host, resources))
+                {
+                    return _resourceService.GetAllAllowlist(host.Id);
+                }
             }
             return null;
+
         }
 
 
@@ -79,17 +80,30 @@ namespace Lycium.Authentication.Server.Controllers
         /// </summary>
         /// <param name="cid">主机ID</param>
         /// <returns></returns>
-        [HttpGet("get/whitelist/id/{cid}")]
-        public IEnumerable<string> QueryAllWhitelist(long cid)
+        [HttpGet("get/allowlist/id/{cid}")]
+        public IEnumerable<string> QueryAllAllowlist(long cid)
         {
-            return _resourceService.GetAllWhitelist(cid);
+            return _resourceService.GetAllAllowlist(cid);
         }
-        [HttpGet("get/whitelist/secretKey")]
-        public IEnumerable<string> QueryAllWhitelist()
+
+
+
+        //***********************************Step 5: 节点获取所有白名单资源****************************//
+        /// <summary>
+        /// 主机查询所有白名单资源
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("get/allowlist/secretKey")]
+        public IEnumerable<string> QueryAllAllowlist()
         {
-            var secretKey = _infoService.GetSecretKeyFromContext(HttpContext);
-            var host = _hostService.GetHostBySecretKey(secretKey);
-            return _resourceService.GetAllWhitelist(host.Id);
+
+            var host = _hostService.OperationCheck(HttpContext);
+            if (host != null)
+            {
+                return _resourceService.GetAllAllowlist(host.Id);
+            }
+            return null;
+
         }
 
 
@@ -99,14 +113,14 @@ namespace Lycium.Authentication.Server.Controllers
         /// <param name="cid">主机ID</param>
         /// <param name="resources">资源</param>
         /// <returns></returns>
-        [HttpPost("set/whitelist")]
-        public object SetWhitelist(long cid, params long[] resources)
+        [HttpPost("set/allowlist")]
+        public object SetAllowList(long cid, params long[] resources)
         {
 
-            if (_resourceService.SetResourceAsWhitelist(resources))
+            if (_resourceService.ModifyResourceAsAllowlist(resources))
             {
-                var host = _hostService.GetHostById(cid);
-                var code = _resourceNotify.WhitelistNotify(host, _resourceService.GetWhitelist(resources));
+                var host = _hostService.GetHostFromId(cid);
+                var code = _resourceNotify.NotifyAllowlist(host, _resourceService.GetAllowlist(resources));
                 if (code == System.Net.HttpStatusCode.OK)
                 {
                     return new { code = 0, msg = "更新成功，通知成功！" };
@@ -128,14 +142,14 @@ namespace Lycium.Authentication.Server.Controllers
         /// <param name="cid">主机ID</param>
         /// <param name="resources">资源</param>
         /// <returns></returns>
-        [HttpPost("set/backlist")]
-        public object SetBacklist(long cid, params long[] resources)
+        [HttpPost("set/blocklist")]
+        public object SetBlockList(long cid, params long[] resources)
         {
 
-            if (_resourceService.SetResourceAsBlacklist(resources))
+            if (_resourceService.ModifyResourceAsBlocklist(resources))
             {
-                var host = _hostService.GetHostById(cid);
-                var code = _resourceNotify.BacklistNotify(host, _resourceService.GetWhitelist(resources));
+                var host = _hostService.GetHostFromId(cid);
+                var code = _resourceNotify.NotifyBlocklist(host, _resourceService.GetAllowlist(resources));
                 if (code == System.Net.HttpStatusCode.OK)
                 {
                     return new { code = 0, msg = "更新成功，通知成功！" };

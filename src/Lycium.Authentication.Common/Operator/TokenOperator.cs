@@ -97,6 +97,15 @@ namespace Lycium.Authentication
             return (date.ToUniversalTime().Ticks - 621355968000000000) / 10000;
         }
 
+
+        public static void Flush(LyciumToken token)
+        {
+            token.AliveTimeSpan = LyciumToken.GlobalAliveTimeSpan;
+            token.FlushTimeSpan = LyciumToken.GlobalFlushTimeSpan;
+            token.CreateTime = NowTimeStampSecond();
+            token.Content = Guid.NewGuid().ToString();
+        }
+
     }
 
 }

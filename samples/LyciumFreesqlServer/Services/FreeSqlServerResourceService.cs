@@ -1,12 +1,9 @@
 ﻿using Lycium.Authentication;
 using Lycium.Authentication.Common;
-using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Net;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 
 namespace LyciumFreesqlServer.Services
 {
@@ -47,7 +44,7 @@ namespace LyciumFreesqlServer.Services
             if (res != null)
             {
                 var hashSets = res.Select(item => item.Resource).ToImmutableHashSet();
-                
+
                 for (int i = 0; i < resources.Length; i++)
                 {
                     if (!hashSets.Contains(resources[i]))
@@ -62,7 +59,7 @@ namespace LyciumFreesqlServer.Services
 
                 for (int i = 0; i < resources.Length; i++)
                 {
-                    insertList.Add(new LyciumResource() {  Cid = host.Id, Resource = resources[i] });
+                    insertList.Add(new LyciumResource() { Cid = host.Id, Resource = resources[i] });
                 }
                 return _freesql.Insert(resources).ExecuteAffrows() == resources.Length;
             }
@@ -75,16 +72,16 @@ namespace LyciumFreesqlServer.Services
         /// </summary>
         /// <param name="host"></param>
         /// <returns></returns>
-        public override IEnumerable<string> GetAllWhitelist(long hostId)
+        public override IEnumerable<string> GetAllAllowlist(long hostId)
         {
-            return _freesql.Select<LyciumResource>().Where(item => item.Cid == hostId && item.InWhiteList == true).ToList(item => item.Resource);
+            return _freesql.Select<LyciumResource>().Where(item => item.Cid == hostId && item.InAllowList == true).ToList(item => item.Resource);
         }
 
 
 
         public override IEnumerable<LyciumResource> Query(long hostId, int page, int size)
         {
-            return _freesql.Select<LyciumResource>().Where(item=>item.Cid == hostId).Page(page, size).ToList();
+            return _freesql.Select<LyciumResource>().Where(item => item.Cid == hostId).Page(page, size).ToList();
         }
 
         public override IEnumerable<LyciumResource> QueryAll(long hostId)
@@ -93,13 +90,13 @@ namespace LyciumFreesqlServer.Services
         }
 
 
-        public override bool SetResourceAsBlacklist(params long[] resources)
+        public override bool ModifyResourceAsBlocklist(params long[] resources)
         {
             return SetResourceStatus(false, resources);
         }
 
 
-        public override bool SetResourceAsWhitelist(params long[] resources)
+        public override bool ModifyResourceAsAllowlist(params long[] resources)
         {
             return SetResourceStatus(true, resources);
         }
@@ -117,15 +114,15 @@ namespace LyciumFreesqlServer.Services
         /// <returns></returns>
         private bool SetResourceStatus(bool status, params long[] resources)
         {
-           return _freesql
-                .Update<LyciumResource>()
-                .Set(item => item.InWhiteList == status)
-                .Where(item => resources.Contains(item.Id))
-                .ExecuteAffrows() == resources.Length;
+            return _freesql
+                 .Update<LyciumResource>()
+                 .Set(item => item.InAllowList == status)
+                 .Where(item => resources.Contains(item.Id))
+                 .ExecuteAffrows() == resources.Length;
         }
 
 
-        public override IEnumerable<string> GetWhitelist(params long[] resources)
+        public override IEnumerable<string> GetAllowlist(params long[] resources)
         {
             return _freesql.Select<LyciumResource>().Where(item => resources.Contains(item.Id)).ToList(item => item.Resource);
         }

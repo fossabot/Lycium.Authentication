@@ -21,7 +21,7 @@ namespace Lycium.Configuration
         public static string HostToken;
         internal static long HostTokenAliveTime;
         internal static long HostTokenCreateTime;
-        internal static ImmutableHashSet<string> Whitelist;
+        internal static ImmutableHashSet<string> Allowlist;
 
 
         internal static IApplicationBuilder AppBuilder;
@@ -30,7 +30,7 @@ namespace Lycium.Configuration
         static ClientConfiguration()
         {
 
-            Whitelist = ImmutableHashSet.Create("test");
+            Allowlist = ImmutableHashSet.Create("test");
 
         }
 
@@ -87,16 +87,16 @@ namespace Lycium.Configuration
         }
 
         #region 白名单和黑名单设置
-        internal static void AddRouteWhiteList(IEnumerable<string> list)
+        internal static void AddRouteAllowList(IEnumerable<string> list)
         {
 
-            Whitelist = Whitelist.Union(list);
+            Allowlist = Allowlist.Union(list);
 
         }
         internal static void AddRouteBackList(IEnumerable<string> list)
         {
 
-            Whitelist = Whitelist.Except(list);
+            Allowlist = Allowlist.Except(list);
 
         }
         #endregion

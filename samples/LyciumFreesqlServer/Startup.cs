@@ -1,19 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Lycium.Authentication;
-using Lycium.Authentication.Server.Notify;
+using Lycium.Authentication.Server;
 using LyciumFreesqlServer.Request;
 using LyciumFreesqlServer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 namespace LyciumFreesqlServer
@@ -52,7 +45,9 @@ namespace LyciumFreesqlServer
             services.AddScoped<IContextInfoService, FreesqlContextInfoService>();
             services.AddScoped<IServerResourceService, FreeSqlServerResourceService>();
             services.AddScoped<IServerHostGroupService, FreeSqlServerHostGroupService>();
+            services.AddScoped<IServerTokenService, FreeSqlServerTokenService>();
             services.AddScoped<IResourceNotify, HttpResourceNotify>();
+            services.AddScoped<ITokenNotify, HttpTokenNotify>();
             services.AddScoped<LyciumRequest>();
 
         }

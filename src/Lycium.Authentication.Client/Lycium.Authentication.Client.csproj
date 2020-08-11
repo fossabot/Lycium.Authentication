@@ -20,4 +20,9 @@
     <ProjectReference Include="..\Lycium.Authentication.Common\Lycium.Authentication.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Step2Resource\Notify\" />
+    <Folder Include="Step3Token\Notify\" />
+  </ItemGroup>
+
 </Project>

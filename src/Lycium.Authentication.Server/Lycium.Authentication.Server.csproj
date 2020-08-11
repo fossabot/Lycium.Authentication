@@ -13,8 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="Controllers\ResourcesController.cs" />
-    <Compile Remove="Controllers\TokenController.cs" />
+    <Compile Remove="Local\Controllers\ResourcesController.cs" />
+    <Compile Remove="Local\Controllers\TokenController.cs" />
+    <Compile Remove="Step3Token\Controllers\TokenIncrementsController.cs" />
+    <Compile Remove="Step3Token\Services\ITokenIncrementService.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Properties\" />
+    <Folder Include="Step1Host\Notify\" />
   </ItemGroup>
 
   <ItemGroup>

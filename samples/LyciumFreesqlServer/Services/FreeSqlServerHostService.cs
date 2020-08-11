@@ -28,7 +28,7 @@ namespace LyciumFreesqlServer.Services
             InitAction?.Invoke(freesql);
         }
 
-        public override LyciumHost GetHostBySecretKey(string secretKey)
+        public override LyciumHost GetHostFromSecretKey(string secretKey)
         {
             return _freeSql.Select<LyciumHost>().Where(item => item.SecretKey == secretKey).First();
         }
@@ -58,15 +58,14 @@ namespace LyciumFreesqlServer.Services
             return _freeSql.Select<LyciumHost>().Where(item => item.HostName == hostName).First();
         }
 
-        public override bool UpdateHost(LyciumHost host)
+        public override bool ModifyHost(LyciumHost host)
         {
             var repository = _freeSql.GetRepository<LyciumHost>();
             var result = repository.Where(item => item.Id == host.Id).First();
-            repository.Attach(result);
             return repository.Update(host) == 1;
         }
 
-        public override LyciumHost GetHostById(long id)
+        public override LyciumHost GetHostFromId(long id)
         {
             return _freeSql.Select<LyciumHost>().Where(item => item.Id == id).First();
         }

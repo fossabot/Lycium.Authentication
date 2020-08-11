@@ -19,8 +19,8 @@ namespace Lycium.Authentication
         /// </summary>
         /// <param name="hostName">主机名（唯一）</param>
         /// <returns></returns>
-        public abstract LyciumHost GetHostBySecretKey(string secretKey);
-        public abstract LyciumHost GetHostById(long id);
+        public abstract LyciumHost GetHostFromSecretKey(string secretKey);
+        public abstract LyciumHost GetHostFromId(long id);
 
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace Lycium.Authentication
             var secretKey = _infoService.GetSecretKeyFromContext(context);
             if (secretKey != null)
             {
-                var host = GetHostBySecretKey(secretKey);
+                var host = GetHostFromSecretKey(secretKey);
                 if (host != null)
                 {
                     return host;
@@ -106,7 +106,7 @@ namespace Lycium.Authentication
         /// </summary>
         /// <param name="lyciumHost"></param>
         /// <returns></returns>
-        public abstract bool UpdateHost(LyciumHost lyciumHost);
+        public abstract bool ModifyHost(LyciumHost lyciumHost);
 
     }
 }

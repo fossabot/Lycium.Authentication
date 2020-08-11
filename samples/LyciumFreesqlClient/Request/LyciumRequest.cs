@@ -28,7 +28,7 @@ namespace LyciumFreesqlClient.Request
         }
 
 
-        public HttpClient GetClient()
+        public HttpClient GetClient(long? uid = default,long? gid = default)
         {
 
             if (_hostServer.NeedRefresh())
@@ -39,16 +39,24 @@ namespace LyciumFreesqlClient.Request
             request.BaseAddress = ServerAddress;
             request.DefaultRequestHeaders.Add(LyciumConfiguration.SECRET_KEY, ClientConfiguration.SecretKey);
             request.DefaultRequestHeaders.Add(LyciumConfiguration.HOST_TOKEN, ClientConfiguration.HostToken);
+            if (uid!=null)
+            {
+                request.DefaultRequestHeaders.Add(LyciumConfiguration.USER_UID, uid.ToString());
+            }
+            if (gid != null)
+            {
+                request.DefaultRequestHeaders.Add(LyciumConfiguration.USER_GID, gid.ToString());
+            }
             return request;
         }
 
 
-        internal async Task<S> Post<T, S>(string route, T obj)
+        internal async Task<S> Post<T, S>(string route, T obj, long? uid = default, long? gid = default)
         {
 
             try
             {
-                var request = GetClient();
+                var request = GetClient(uid, gid);
                 StringContent content = new StringContent(JsonSerializer.Serialize(obj));
                 content.Headers.ContentType.MediaType = "application/json";
                 var result = await request.PostAsync(route, content);
@@ -63,13 +71,13 @@ namespace LyciumFreesqlClient.Request
             }
 
         }
-        internal T Get<T>(string route)
+        internal T Get<T>(string route, long? uid = default, long? gid = default)
         {
 
             try
             {
 
-                var request = GetClient();
+                var request = GetClient(uid,gid);
                 var result = request.GetStringAsync(route).Result;
                 var instance = JsonSerializer.Deserialize<T>(result);
                 return instance;

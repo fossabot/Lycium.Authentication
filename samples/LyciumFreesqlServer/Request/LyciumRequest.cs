@@ -25,6 +25,35 @@ namespace LyciumFreesqlServer.Request
             return request;
         }
 
+        public HttpClient GetClient(string host)
+        {
+
+            var request = _factory.CreateClient(host);
+            request.BaseAddress = new Uri(host);
+            return request;
+        }
+
+        internal async Task<S> Post<T, S>(string host, string route, T obj)
+        {
+
+            try
+            {
+                var request = GetClient(host);
+                StringContent content = new StringContent(JsonSerializer.Serialize(obj));
+                content.Headers.ContentType.MediaType = "application/json";
+                var result = await request.PostAsync(route, content);
+                return JsonSerializer.Deserialize<S>(result.Content.ReadAsStringAsync().Result);
+
+            }
+            catch (Exception ex)
+            {
+
+                return default;
+
+            }
+
+        }
+
 
         internal async Task<S> Post<T, S>(LyciumHost host, string route, T obj)
         {
@@ -46,7 +75,28 @@ namespace LyciumFreesqlServer.Request
             }
 
         }
-        internal T Get<T>(LyciumHost host, string route)
+
+        internal async Task<T> Get<T>(string host, string route)
+        {
+
+            try
+            {
+
+                var request = GetClient(host);
+                var result = request.GetStringAsync(route).Result;
+                var instance = JsonSerializer.Deserialize<T>(result);
+                return instance;
+
+            }
+            catch (Exception ex)
+            {
+
+                return default;
+
+            }
+
+        }
+        internal async Task<T> Get<T>(LyciumHost host, string route)
         {
 
             try

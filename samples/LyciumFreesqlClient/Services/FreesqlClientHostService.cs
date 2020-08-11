@@ -6,11 +6,11 @@ using System.Text.Json;
 
 namespace LyciumFreesqlClient.Services
 {
-    public class FreesqlClientHostService : IClientHostService
+    public class FreeSqlClientHostService : IClientHostService
     {
 
         private static readonly HttpClient _request;
-        static FreesqlClientHostService()
+        static FreeSqlClientHostService()
         {
             _request = new HttpClient();
             _request.BaseAddress = new Uri(ClientConfiguration.ServerUrl);
@@ -28,13 +28,13 @@ namespace LyciumFreesqlClient.Services
             try
             {
                 var result = _request.GetStringAsync("api/Host/refreshToken").Result;
-                var instance = JsonSerializer.Deserialize<(string Token, long alivaTime, long createTime)>(result);
+                var (Token, alivaTime, createTime) = JsonSerializer.Deserialize<(string Token, long alivaTime, long createTime)>(result);
                 if (result != default)
                 {
                     ClientConfiguration.SetTokenInfo(
-                        instance.Token
-                        , instance.alivaTime
-                        , instance.createTime);
+                        Token
+                        , alivaTime
+                        , createTime);
                     return true;
                 }
 

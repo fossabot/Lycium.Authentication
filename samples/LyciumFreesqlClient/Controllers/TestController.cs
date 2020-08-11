@@ -11,6 +11,7 @@ namespace LyciumFreesqlClient.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
+
         [HttpGet]
         public string Test()
         {

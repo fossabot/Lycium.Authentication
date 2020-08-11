@@ -1,5 +1,4 @@
 ﻿using Lycium.Configuration;
-using Lycium.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using System.Collections.Generic;
@@ -67,7 +66,7 @@ namespace Lycium.Authentication.Utils
                     }
 
                 }
-                ClientConfiguration.AddRouteWhiteList(list.ToArray());
+                ClientConfiguration.AddRouteAllowList(list.ToArray());
 
             }
         }

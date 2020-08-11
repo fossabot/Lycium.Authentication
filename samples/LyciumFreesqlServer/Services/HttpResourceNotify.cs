@@ -1,5 +1,5 @@
 ﻿using Lycium.Authentication.Common;
-using Lycium.Authentication.Server.Notify;
+using Lycium.Authentication.Server;
 using LyciumFreesqlServer.Request;
 using System.Collections.Generic;
 using System.Net;
@@ -15,14 +15,14 @@ namespace LyciumFreesqlServer.Services
         {
             _request = lyciumRequest;
         }
-        public override HttpStatusCode BacklistNotify(LyciumHost host, IEnumerable<string> resources)
+        public override HttpStatusCode NotifyBlocklist(LyciumHost host, IEnumerable<string> resources)
         {
-            return _request.Post<IEnumerable<string>, HttpStatusCode>(host, "api/Resource/set/backlist", resources).Result;
+            return _request.Post<IEnumerable<string>, HttpStatusCode>(host, "api/Resource/set/blocklist", resources).Result;
         }
 
-        public override HttpStatusCode WhitelistNotify(LyciumHost host, IEnumerable<string> resources)
+        public override HttpStatusCode NotifyAllowlist(LyciumHost host, IEnumerable<string> resources)
         {
-            return _request.Post<IEnumerable<string>, HttpStatusCode>(host, "api/Resource/set/whitelist", resources).Result;
+            return _request.Post<IEnumerable<string>, HttpStatusCode>(host, "api/Resource/set/allowlist", resources).Result;
         }
 
     }

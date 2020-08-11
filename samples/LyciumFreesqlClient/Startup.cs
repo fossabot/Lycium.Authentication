@@ -52,8 +52,11 @@ namespace LyciumFreesqlClient
                                                             .Build());
 
             services.AddScoped<LyciumRequest>();
-            services.AddScoped<IClientHostService, FreesqlClientHostService>();
-            services.AddScoped<IClientResourceService, FreesqlClientResourceService>();
+            services.AddScoped<LoginService>();
+            services.AddScoped<IContextInfoService, FreesqlContextInfoService>();
+            services.AddScoped<IClientHostService, FreeSqlClientHostService>();
+            services.AddScoped<IClientResourceService, FreeSqlClientResourceService>();
+            services.AddScoped<IClientTokenService, FreeSqlClientTokenService>();
 
 
         }

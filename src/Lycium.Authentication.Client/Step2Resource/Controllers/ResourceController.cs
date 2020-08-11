@@ -16,17 +16,17 @@ namespace Lycium.Authentication.Controllers
             _resourceService = resourceService;
         }
 
-        [HttpPost("get/whitelist")]
-        public IEnumerable<string> GetWhitelist()
+        [HttpPost("get/allowlist")]
+        public IEnumerable<string> GetAllowlist()
         {
-            return ClientConfiguration.Whitelist;
+            return ClientConfiguration.Allowlist;
         }
 
 
-        [HttpPost("set/whitelist")]
-        public HttpStatusCode SetWhitelist(IEnumerable<string> whitelist)
+        [HttpPost("set/allowlist")]
+        public HttpStatusCode SetAllowlist(IEnumerable<string> allowlist)
         {
-            _resourceService.AddWritelist(whitelist);
+            _resourceService.AddAllowlist(allowlist);
             return HttpStatusCode.OK;
         }
 
@@ -34,7 +34,7 @@ namespace Lycium.Authentication.Controllers
         [HttpPost("set/backlist")]
         public HttpStatusCode SetBacklist(IEnumerable<string> backlist)
         {
-            _resourceService.AddBacklist(backlist);
+            _resourceService.AddBlocklist(backlist);
             return HttpStatusCode.OK;
         }
 

@@ -36,7 +36,7 @@ namespace Lycium.Authentication.Server.Controllers
             }
 
 
-            var host = _hostService.GetHostBySecretKey(secretKey);
+            var host = _hostService.GetHostFromSecretKey(secretKey);
             if (host == null)
             {
                 return $"检测到 SecretKey 为 {secretKey.Substring(0, 6)}... 的主机未注册！";
@@ -61,7 +61,7 @@ namespace Lycium.Authentication.Server.Controllers
             }
 
 
-            var host = _hostService.GetHostBySecretKey(secretKey);
+            var host = _hostService.GetHostFromSecretKey(secretKey);
             if (host == null)
             {
                 return $"检测到 SecretKey 为 {secretKey.Substring(0, 6)}... 的主机未注册！";

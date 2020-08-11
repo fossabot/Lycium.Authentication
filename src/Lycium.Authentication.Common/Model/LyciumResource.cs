@@ -6,6 +6,6 @@
         public long Cid { get; set; }
         public string Description { get; set; }
         public string Resource { get; set; }
-        public bool InWhiteList { get; set; }
+        public bool InAllowList { get; set; }
     }
 }

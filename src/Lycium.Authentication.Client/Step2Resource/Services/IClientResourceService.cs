@@ -17,7 +17,7 @@ namespace Lycium.Authentication
         /// 从服务端获取并写入白名单
         /// </summary>
         /// <returns></returns>
-        public abstract bool GetAndWriteWhitelist();
+        public abstract bool GetAndWriteAllowlist();
 
 
         /// <summary>
@@ -25,9 +25,9 @@ namespace Lycium.Authentication
         /// </summary>
         /// <param name="resources"></param>
         /// <returns></returns>
-        public virtual void AddWritelist(IEnumerable<string> resources)
+        public virtual void AddAllowlist(IEnumerable<string> resources)
         {
-            ClientConfiguration.AddRouteWhiteList(resources);
+            ClientConfiguration.AddRouteAllowList(resources);
         }
 
 
@@ -36,9 +36,9 @@ namespace Lycium.Authentication
         /// </summary>
         /// <param name="resources"></param>
         /// <returns></returns>
-        public virtual void AddBacklist(IEnumerable<string> resources)
+        public virtual void AddBlocklist(IEnumerable<string> resources)
         {
-            ClientConfiguration.AddRouteWhiteList(resources);
+            ClientConfiguration.AddRouteAllowList(resources);
         }
 
 
@@ -47,9 +47,9 @@ namespace Lycium.Authentication
         /// </summary>
         /// <param name="resource"></param>
         /// <returns></returns>
-        public virtual bool IsInWhtelist(string resource)
+        public virtual bool IsInAllowlist(string resource)
         {
-            return ClientConfiguration.Whitelist.Contains(resource);
+            return ClientConfiguration.Allowlist.Contains(resource);
         }
 
        
@@ -57,9 +57,9 @@ namespace Lycium.Authentication
         /// 获取当前系统白名单
         /// </summary>
         /// <returns></returns>
-        public virtual IEnumerable<string> GetWhitelist()
+        public virtual IEnumerable<string> GetAllowlist()
         {
-            return ClientConfiguration.Whitelist;
+            return ClientConfiguration.Allowlist;
         }
     }
 }
