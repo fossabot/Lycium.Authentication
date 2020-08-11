@@ -35,7 +35,7 @@ namespace Lycium.Authentication.Server
         /// <param name="gid"> APP组ID </param>
         /// <returns></returns>
         [HttpGet("LoginToken")]
-        public async Task<LyciumToken> LoginToken()
+        public async Task<string> LoginToken()
         {
 
             if (IsLegal)
@@ -61,7 +61,14 @@ namespace Lycium.Authentication.Server
                     {
                         //如果新增成功则发送通知
                         await _tokenNotify.NotifyTokensAdd(Gid,token);
-                        return token;
+                        return JsonResult(token);
+                    }
+                    else
+                    {
+
+                        HttpContext.Response.StatusCode = 500;
+                        LyciumConfiguration.ReturnMessage(HttpContext, 4017, "无法创建服务端Token，请联系管理员！");
+                        
                     }
                 }
                 else
@@ -71,13 +78,23 @@ namespace Lycium.Authentication.Server
                     {
                         //如果修改成功则发送通知
                         await _tokenNotify.NotifyTokensModify(Gid, token);
-                        return token;
+                        return JsonResult(token);
+                    }
+                    else
+                    {
+                        HttpContext.Response.StatusCode = 401;
+                        LyciumConfiguration.ReturnMessage(HttpContext, 4018, "无法更新服务端Token，请联系管理员！");
                     }
                 }
 
             }
-            Response.StatusCode = 401;
-            await Response.WriteAsync("检测到非法客户端请求，请联系管理员！");
+            else
+            {
+                HttpContext.Response.StatusCode = 401;
+                LyciumConfiguration.ReturnMessage(HttpContext, 4016, "主机校验不合法！");
+
+            }
+            
             return null;
         }
 
@@ -102,20 +119,21 @@ namespace Lycium.Authentication.Server
                 {
                     //异步通知节点注销token
                     await _tokenNotify.NotifyTokensClear(Gid, Uid);
-                    Response.StatusCode = 200;
-                    await Response.WriteAsync("注销成功！");
+                    return HttpStatusCode.OK;
                 }
                 else
                 {
-                    Response.StatusCode = 400;
-                    await Response.WriteAsync("未检测到需要注销的Token！");
+                   
+                    return HttpStatusCode.BadRequest;
                 }
 
             }
+            else
+            {
 
-            Response.StatusCode = 401;
-            await Response.WriteAsync("检测到非法客户端请求，请联系管理员！");
-            return HttpStatusCode.Unauthorized;
+                return HttpStatusCode.Unauthorized;
+            }
+            
 
         }
 
@@ -127,15 +145,19 @@ namespace Lycium.Authentication.Server
         /// </summary>
         /// <returns></returns>
         [HttpGet("single")]
-        public async Task<LyciumToken> GetToken()
+        public async Task<string> GetToken()
         {
             if (IsLegal)
             {
-                return _tokenService.GetToken(Uid,Gid);
+                return JsonResult(_tokenService.GetToken(Uid,Gid));
             }
-            Response.StatusCode = 401;
-            await Response.WriteAsync("检测到非法客户端请求，请联系管理员！");
-            return null;
+            else
+            {
+
+                HttpContext.Response.StatusCode = 401;
+                LyciumConfiguration.ReturnMessage(HttpContext, 4016, "主机校验不合法！");
+                return null;
+            }
         }
 
 
@@ -146,7 +168,7 @@ namespace Lycium.Authentication.Server
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpPost("check")]
-        public async Task<LyciumToken> CheckToken(LyciumToken token)
+        public async Task<string> CheckToken(LyciumToken token)
         {
             if (IsLegal)
             {
@@ -157,16 +179,20 @@ namespace Lycium.Authentication.Server
                 }
                 if (token.Content == localToken.Content)
                 {
-                    return localToken;
+                    return JsonResult(localToken);
                 }
                 else
                 {
                     return null;
                 }
             }
-            Response.StatusCode = 401;
-            await Response.WriteAsync("检测到非法客户端请求，请联系管理员！");
-            return null;
+            else
+            {
+
+                HttpContext.Response.StatusCode = 401;
+                LyciumConfiguration.ReturnMessage(HttpContext, 4016, "主机校验不合法！");
+                return null;
+            }
         }
 
 
@@ -177,7 +203,7 @@ namespace Lycium.Authentication.Server
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpPost("refresh")]
-        public async Task<LyciumToken> RefreshToken(LyciumToken token)
+        public async Task<string> RefreshToken(LyciumToken token)
         {
             if (IsLegal)
             {
@@ -197,7 +223,7 @@ namespace Lycium.Authentication.Server
                         if (_tokenService.ModifyToken(token))
                         {
                             await _tokenNotify.NotifyTokensModify(Gid, token);
-                            return token;
+                            return JsonResult(token);
                         }
                         else
                         {
@@ -206,27 +232,28 @@ namespace Lycium.Authentication.Server
                             if (_tokenService.ModifyToken(token))
                             {
                                 await _tokenNotify.NotifyTokensModify(Gid, token);
-                                return token;
+                                return JsonResult(token);
                             }
                             else
                             {
+
+                                HttpContext.Response.StatusCode = 500;
+                                LyciumConfiguration.ReturnMessage(HttpContext, 4211, "服务端Token更新失败！");
                                 return null;
                             }
-
                         }
 
                     }
-                    else
-                    {
-                        return null;
-                    }
-
                 }
-
+                return null;
             }
-            Response.StatusCode = 401;
-            await Response.WriteAsync("检测到非法客户端请求，请联系管理员！");
-            return null;
+            else
+            {
+
+                HttpContext.Response.StatusCode = 401;
+                LyciumConfiguration.ReturnMessage(HttpContext, 4016, "主机校验不合法！");
+                return null;
+            }
         }
 
 

@@ -39,7 +39,7 @@ namespace LyciumFreesqlServer.Request
             try
             {
                 var request = GetClient(host);
-                StringContent content = new StringContent(JsonSerializer.Serialize(obj));
+                StringContent content = new StringContent(JsonSerializer.Serialize(obj, LyciumConfiguration.JsonOption));
                 content.Headers.ContentType.MediaType = "application/json";
                 var result = await request.PostAsync(route, content);
                 return JsonSerializer.Deserialize<S>(result.Content.ReadAsStringAsync().Result);
@@ -61,7 +61,7 @@ namespace LyciumFreesqlServer.Request
             try
             {
                 var request = GetClient(host);
-                StringContent content = new StringContent(JsonSerializer.Serialize(obj));
+                StringContent content = new StringContent(JsonSerializer.Serialize(obj, LyciumConfiguration.JsonOption));
                 content.Headers.ContentType.MediaType = "application/json";
                 var result = await request.PostAsync(route, content);
                 return JsonSerializer.Deserialize<S>(result.Content.ReadAsStringAsync().Result);
@@ -84,7 +84,7 @@ namespace LyciumFreesqlServer.Request
 
                 var request = GetClient(host);
                 var result = request.GetStringAsync(route).Result;
-                var instance = JsonSerializer.Deserialize<T>(result);
+                var instance = JsonSerializer.Deserialize<T>(result, LyciumConfiguration.JsonOption);
                 return instance;
 
             }
@@ -104,7 +104,7 @@ namespace LyciumFreesqlServer.Request
 
                 var request = GetClient(host);
                 var result = request.GetStringAsync(route).Result;
-                var instance = JsonSerializer.Deserialize<T>(result);
+                var instance = JsonSerializer.Deserialize<T>(result, LyciumConfiguration.JsonOption);
                 return instance;
 
             }

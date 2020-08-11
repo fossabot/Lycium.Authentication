@@ -34,8 +34,8 @@ namespace LyciumFreesqlServer
 
 
             services.AddSingleton(p => new FreeSql.FreeSqlBuilder()
-                                                            .UseConnectionString(FreeSql.DataType.PostgreSQL, "")
-                                                            .UseAutoSyncStructure(true) //自动迁移实体的结构到数据库
+                                                            .UseConnectionString(FreeSql.DataType.PostgreSQL, "Host=127.0.0.1;Port=5432;Username=postgres;Password=123456; Database=LyciumAuthServer2;Pooling=true;Minimum Pool Size=1")
+                                                            //.UseAutoSyncStructure(true) //自动迁移实体的结构到数据库
                                                             .Build());
 
 

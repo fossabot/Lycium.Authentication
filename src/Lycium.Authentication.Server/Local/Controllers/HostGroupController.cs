@@ -60,9 +60,9 @@ namespace Lycium.Authentication.Server.Controllers
         /// <param name="gid">组ID</param>
         /// <returns></returns>
         [HttpGet("group/host/query/{gid}")]
-        public IEnumerable<string> GetHosts(long gid)
+        public string GetHosts(long gid)
         {
-            return _groupService.GetHostsUrlByGroupId(gid);
+            return JsonResult(_groupService.GetHostsUrlByGroupId(gid));
         }
 
 

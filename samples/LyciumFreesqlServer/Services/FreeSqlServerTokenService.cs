@@ -39,7 +39,7 @@ namespace LyciumFreesqlServer.Services
 
         public override bool ModifyToken(LyciumToken token)
         {
-            return _freeSql.Update<LyciumToken>(token).Where(item => item.Uid == token.Uid && item.Gid == token.Gid).ExecuteAffrows() == 1;
+            return _freeSql.Update<LyciumToken>().SetDto(token).Where(item => item.Uid == token.Uid && item.Gid == token.Gid).ExecuteAffrows() == 1;
         }
 
         public override bool RemoveToken(long uid, long gid)

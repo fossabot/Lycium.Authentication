@@ -2,7 +2,6 @@
 using Lycium.Authentication.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Net;
 
 namespace Lycium.Authentication.Server.Controllers
@@ -29,10 +28,10 @@ namespace Lycium.Authentication.Server.Controllers
         /// <param name="host"></param>
         /// <returns></returns>
         [HttpPost("create")]
-        public LyciumHost Create(LyciumHost host)
+        public string Create(LyciumHost host)
         {
             host.SecretKey = Guid.NewGuid().ToString();
-            return _hostService.AddHost(host) ? host : null;
+            return _hostService.AddHost(host) ? JsonResult(host) : null;
         }
 
 
@@ -54,7 +53,7 @@ namespace Lycium.Authentication.Server.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("refreshToken")]
-        public object RefreshToken()
+        public string RefreshToken()
         {
 
             var host = _hostService.RequestCheck(HttpContext);
@@ -68,7 +67,8 @@ namespace Lycium.Authentication.Server.Controllers
                     host.HostToken = Guid.NewGuid().ToString();
                     if (_hostService.ModifyHost(host))
                     {
-                        return new { host.HostToken, host.TokenAliveTime,host.TokenCreateTime };
+                        var obj = new { host.HostToken, host.TokenAliveTime,host.TokenCreateTime };
+                        return JsonResult(obj);
                     }
                 }
             }
@@ -109,9 +109,9 @@ namespace Lycium.Authentication.Server.Controllers
         /// <param name="size">页容量</param>
         /// <returns></returns>
         [HttpGet("query")]
-        public IEnumerable<LyciumHost> Query(int page, int size)
+        public string Query(int page, int size)
         {
-            return _hostService.Query(page, size);
+            return JsonResult(_hostService.Query(page, size));
         }
 
 
@@ -121,9 +121,9 @@ namespace Lycium.Authentication.Server.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("keywordquery/{keyword}")]
-        public IEnumerable<LyciumHost> QueryKeyword(int page, int size, string keyword)
+        public string QueryKeyword(int page, int size, string keyword)
         {
-            return _hostService.KeywordQuery(page, size, keyword);
+            return JsonResult(_hostService.KeywordQuery(page, size, keyword));
         }
 
 

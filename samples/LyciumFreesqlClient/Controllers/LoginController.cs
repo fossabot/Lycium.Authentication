@@ -26,5 +26,6 @@ namespace LyciumFreesqlClient.Controllers
             return _loginService.Logout(uid, gid);
         }
 
+
     }
 }

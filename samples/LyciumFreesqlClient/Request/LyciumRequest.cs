@@ -57,10 +57,10 @@ namespace LyciumFreesqlClient.Request
             try
             {
                 var request = GetClient(uid, gid);
-                StringContent content = new StringContent(JsonSerializer.Serialize(obj));
+                StringContent content = new StringContent(JsonSerializer.Serialize(obj, LyciumConfiguration.JsonOption));
                 content.Headers.ContentType.MediaType = "application/json";
                 var result = await request.PostAsync(route, content);
-                return JsonSerializer.Deserialize<S>(result.Content.ReadAsStringAsync().Result);
+                return JsonSerializer.Deserialize<S>(result.Content.ReadAsStringAsync().Result,LyciumConfiguration.JsonOption);
 
             }
             catch (Exception ex)
@@ -79,7 +79,7 @@ namespace LyciumFreesqlClient.Request
 
                 var request = GetClient(uid,gid);
                 var result = request.GetStringAsync(route).Result;
-                var instance = JsonSerializer.Deserialize<T>(result);
+                var instance = JsonSerializer.Deserialize<T>(result, LyciumConfiguration.JsonOption);
                 return instance;
 
             }

@@ -21,6 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             _syncLock = new object();
             _option = new JsonSerializerOptions();
+            _option.PropertyNamingPolicy = null;
             _option.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
         }
 
@@ -68,7 +69,11 @@ namespace Microsoft.Extensions.DependencyInjection
                 if (!_resourceService.IsInAllowlist(resource))
                 {
 
-                    HasSync(context);
+                    //检测该主机是否已经同步过
+                    if (!HasSync(context))
+                    {
+                        return;
+                    }
 
                     #region Token认证
                     //从上下文中获取Token
@@ -79,12 +84,8 @@ namespace Microsoft.Extensions.DependencyInjection
 
                         //没有Token返回登录
                         context.Response.StatusCode = 401;
-                        await context.Response.WriteAsync(
-                            JsonSerializer.Serialize(
-                                new { code = 4011, msg = "未从客户端获取到Token，Token认证失败！" })
-                            );
-
-
+                        ReturnMessage(context, 4011, "未从请求中获取到Token，Token认证失败！");
+                        return;
                     }
 
                     var uid = _infoService.GetUidFromContext(context);
@@ -125,8 +126,10 @@ namespace Microsoft.Extensions.DependencyInjection
                                             }
                                             else
                                             {
-                                                context.Response.StatusCode = 401;
-                                                await context.Response.WriteAsync("Token 刷新失败，认证失败！");
+
+                                                context.Response.StatusCode = 500;
+                                                ReturnMessage(context, 4012, "客户端 Token 刷新成功，写入失败！");
+                                                
                                             }
                                         }
 
@@ -134,9 +137,11 @@ namespace Microsoft.Extensions.DependencyInjection
                                     }
                                     else
                                     {
+
                                         //没有请求到Token返回登录
                                         context.Response.StatusCode = 401;
-                                        await context.Response.WriteAsync("Token 刷新失败，认证失败！");
+                                        ReturnMessage(context, 4013, "客户端 Token 刷新失败！");
+                                        
                                     }
 
                                 }
@@ -145,7 +150,7 @@ namespace Microsoft.Extensions.DependencyInjection
 
                                     //没申请到
                                     context.Response.StatusCode = 401;
-                                    await context.Response.WriteAsync("Token已经过期，请重新登陆！");
+                                    ReturnMessage(context, 4014, "Token已经过期，请重新登陆！");
 
                                 }
 
@@ -180,20 +185,29 @@ namespace Microsoft.Extensions.DependencyInjection
                                         }
                                         else
                                         {
+
+                                            // 没申请到
                                             context.Response.StatusCode = 401;
-                                            await context.Response.WriteAsync("Token 刷新更新失败，写入失败！");
+                                            ReturnMessage(context, 4110, "Token 写入失败！");
+                                            
                                         }
                                     }
+                                }
+                                else
+                                {
+
+                                    context.Response.StatusCode = 401;
+                                    ReturnMessage(context, 4111, "Token远程认证失败！");
+                                    
                                 }
 
                             }
                             else
                             {
+
                                 context.Response.StatusCode = 401;
-                                await context.Response.WriteAsync(
-                                    JsonSerializer.Serialize(
-                                        new { code = 4012, msg = "Token远程认证失败！" })
-                                    );
+                                ReturnMessage(context, 4112, "Token 未从服务端获取到，请重新登录！");
+                                
                             }
 
 
@@ -239,11 +253,8 @@ namespace Microsoft.Extensions.DependencyInjection
                     {
 
                         context.Response.StatusCode = 401;
-                        await context.Response.WriteAsync(
-                            JsonSerializer.Serialize(
-                                new { code = 4013, msg = "未从服务端获取到Token, 请检查UID和数据库，Token认证失败！" })
-                            );
-
+                        ReturnMessage(context, 4010, "未从客户端获取到Token, 请检查UID和数据库，Token认证失败！");
+                        
                     }
                     #endregion
 
@@ -267,7 +278,7 @@ namespace Microsoft.Extensions.DependencyInjection
         }
 
 
-        public void ReturnMessage(HttpContext context, int code, string message)
+        public async void ReturnMessage(HttpContext context, int code, string message)
         {
 
             if (context != null)
@@ -279,13 +290,49 @@ namespace Microsoft.Extensions.DependencyInjection
                     msg = message
 
                 }, _option);
-                context.Response.WriteAsync(result).GetAwaiter().GetResult();
+                await context.Response.WriteAsync(result);
             }
 
         }
 
+        public bool StartSync()
+        {
+            //是否与服务器已经通步过
+            if (!ClientConfiguration.HasSync)
+            {
 
-        public void HasSync(HttpContext context = null)
+                lock (_syncLock)
+                {
+
+                    if (!ClientConfiguration.HasSync)
+                    {
+
+                        //心跳检测
+                        if (ClientConfiguration.CheckHeartbeat())
+                        {
+
+                            //刷新HostToken
+                            if (_hostService.RefreshToken())
+                            {
+
+                                //同步服务器白名单
+                                if (_resourceService.SyncResources())
+                                {
+                                    ClientConfiguration.HasSync = true;
+                                    return true;
+                                }
+                            }
+
+                        }
+
+                    }
+
+                }
+                return false;
+            }
+            return true;
+        }
+        public bool HasSync(HttpContext context)
         {
             //是否与服务器已经通步过
             if (!ClientConfiguration.HasSync)
@@ -304,7 +351,7 @@ namespace Microsoft.Extensions.DependencyInjection
                             //刷新HostToken
                             if (!_hostService.RefreshToken())
                             {
-
+                                context.Response.StatusCode = 500;
                                 ReturnMessage(context, 5001, "刷新Token失败，请核对主机与服务端信息！");
 
                             }
@@ -315,14 +362,16 @@ namespace Microsoft.Extensions.DependencyInjection
                                 if (!_resourceService.SyncResources())
                                 {
 
+
+                                    context.Response.StatusCode = 500;
                                     ReturnMessage(context, 5002, "获取白名单资源失败，请核对主机与服务端信息！");
-                                
+
                                 }
                                 else
                                 {
 
                                     ClientConfiguration.HasSync = true;
-
+                                    return true;
                                 }
 
                             }
@@ -330,15 +379,19 @@ namespace Microsoft.Extensions.DependencyInjection
                         }
                         else
                         {
+
+                            context.Response.StatusCode = 500;
                             //心跳检测不通过
                             ReturnMessage(context, 5000, "与服务器联通失败，请检查网络和服务端！");
+
+
                         }
                     }
 
                 }
-
+                return false;
             }
-
+            return true;
         }
     }
 }

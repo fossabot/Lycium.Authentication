@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Properties\" />
     <Folder Include="Step2Resource\Notify\" />
     <Folder Include="Step3Token\Notify\" />
   </ItemGroup>

@@ -8,6 +8,7 @@ namespace Microsoft.Extensions.DependencyInjection
     {
         Task PipelineDelegate(HttpContext context, Func<Task> next);
 
-        void HasSync(HttpContext context = null);
+        bool HasSync(HttpContext context);
+        bool StartSync();
     }
 }

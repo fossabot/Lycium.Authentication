@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Lycium.Authentication.Controllers;
+using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
-namespace Lycium.Authentication.Server.Controllers
+namespace Lycium.Authentication.Server
 {
 
     [Route("api/[controller]")]
     [ApiController]
-    public class HeartbeatController : ControllerBase
+    public class HeartbeatController : PassController
     {
 
         [HttpGet]

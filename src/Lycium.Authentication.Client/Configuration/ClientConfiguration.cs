@@ -89,14 +89,19 @@ namespace Lycium.Configuration
         #region 白名单和黑名单设置
         internal static void AddRouteAllowList(IEnumerable<string> list)
         {
-
-            Allowlist = Allowlist.Union(list);
+            if (list!=null)
+            {
+                Allowlist = Allowlist.Union(list);
+            }
+            
 
         }
         internal static void AddRouteBackList(IEnumerable<string> list)
         {
-
-            Allowlist = Allowlist.Except(list);
+            if (list != null)
+            {
+                Allowlist = Allowlist.Except(list);
+            }
 
         }
         #endregion

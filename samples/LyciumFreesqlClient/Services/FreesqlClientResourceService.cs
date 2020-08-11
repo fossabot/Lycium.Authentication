@@ -1,5 +1,5 @@
 ﻿using Lycium.Authentication;
-using Lycium.Utils;
+using Lycium.Authentication.Utils;
 using LyciumFreesqlClient.Request;
 using System.Collections.Generic;
 using System.Linq;

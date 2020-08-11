@@ -47,9 +47,9 @@ namespace Lycium.Authentication.Server.Controllers
         /// <param name="size">页容量</param>
         /// <returns></returns>
         [HttpGet("query")]
-        public IEnumerable<LyciumConfig> Query(int page,int size)
+        public string Query(int page,int size)
         {
-           return _configService.Query(page,size);
+           return JsonResult(_configService.Query(page,size));
         }
 
 
@@ -59,9 +59,9 @@ namespace Lycium.Authentication.Server.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("keywordquery/{keyword}")]
-        public IEnumerable<LyciumConfig> QueryKeyword(int page, int size, string keyword)
+        public string QueryKeyword(int page, int size, string keyword)
         {
-            return _configService.KeywordsQuery(page, size, keyword);
+            return JsonResult(_configService.KeywordsQuery(page, size, keyword));
         }
 
 

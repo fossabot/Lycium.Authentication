@@ -25,10 +25,10 @@ namespace LyciumFreesqlServer.Services
             var hosts = _host.GetHostsUrlByGroupId(gid);
             foreach (var item in hosts)
             {
-                var result = await _request.Post<LyciumToken, HttpStatusCode>(item, "LyciumToken/add", token);
+                var result = await _request.Post<LyciumToken, HttpStatusCode>(item, "api/LyciumToken/add", token);
                 if (result == HttpStatusCode.InternalServerError)
                 {
-                    await _request.Post<LyciumToken, HttpStatusCode>(item, "LyciumToken/add", token);
+                    await _request.Post<LyciumToken, HttpStatusCode>(item, "api/LyciumToken/add", token);
                 }
             }
             
@@ -41,10 +41,10 @@ namespace LyciumFreesqlServer.Services
             var hosts = _host.GetHostsUrlByGroupId(gid);
             foreach (var item in hosts)
             {
-                var result = await _request.Get<HttpStatusCode>(item, $"LyciumToken/remove/{uid}/{gid}");
+                var result = await _request.Get<HttpStatusCode>(item, $"api/LyciumToken/remove/{uid}/{gid}");
                 if (result == HttpStatusCode.InternalServerError)
                 {
-                    await _request.Get<HttpStatusCode>(item, $"LyciumToken/remove/{uid}/{gid}");
+                    await _request.Get<HttpStatusCode>(item, $"api/LyciumToken/remove/{uid}/{gid}");
                 }
             }
 
@@ -56,10 +56,10 @@ namespace LyciumFreesqlServer.Services
             var hosts = _host.GetHostsUrlByGroupId(gid);
             foreach (var item in hosts)
             {
-                var result = await _request.Post<LyciumToken, HttpStatusCode>(item, "LyciumToken/modify", token);
+                var result = await _request.Post<LyciumToken, HttpStatusCode>(item, "api/LyciumToken/modify", token);
                 if (result == HttpStatusCode.InternalServerError)
                 {
-                    await _request.Post<LyciumToken, HttpStatusCode>(item, "LyciumToken/modify", token);
+                    await _request.Post<LyciumToken, HttpStatusCode>(item, "api/LyciumToken/modify", token);
                 }
             }
         }

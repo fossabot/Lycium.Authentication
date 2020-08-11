@@ -27,14 +27,15 @@ namespace LyciumFreesqlClient.Services
 
             try
             {
+
                 var result = _request.GetStringAsync("api/Host/refreshToken").Result;
-                var (Token, alivaTime, createTime) = JsonSerializer.Deserialize<(string Token, long alivaTime, long createTime)>(result);
-                if (result != default)
+                var tempHost = JsonSerializer.Deserialize<TempHost>(result);
+                if (tempHost != default)
                 {
                     ClientConfiguration.SetTokenInfo(
-                        Token
-                        , alivaTime
-                        , createTime);
+                        tempHost.HostToken
+                        , tempHost.TokenAliveTime
+                        , tempHost.TokenCreateTime);
                     return true;
                 }
 
@@ -45,6 +46,16 @@ namespace LyciumFreesqlClient.Services
             }
             return false;
         }
+
+        public class TempHost 
+        {
+            public string HostToken { get; set; }
+
+            public long TokenAliveTime { get; set; }
+            public long TokenCreateTime { get; set; }
+
+        }
+
 
     }
 }

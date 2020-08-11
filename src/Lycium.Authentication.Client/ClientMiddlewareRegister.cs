@@ -59,7 +59,7 @@ namespace Microsoft.AspNetCore.Builder
             }
             //添加本地白名单
             LyciumScanHelper.AddLyciumRoute();
-            @delegate.HasSync();
+            @delegate.StartSync();
         }
 
     }

@@ -1,5 +1,5 @@
 ﻿using Lycium.Authentication.Common;
-using Lycium.Authentication.Server.Notify;
+using Lycium.Authentication.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -8,7 +8,7 @@ namespace Lycium.Authentication.Server.Controllers
 
     [Route("api/[controller]")]
     [ApiController]
-    public class ResourceController : ControllerBase
+    public class ResourceController : PassController
     {
 
         private readonly IServerHostService _hostService;
@@ -33,7 +33,7 @@ namespace Lycium.Authentication.Server.Controllers
         /// <param name="resources"></param>
         /// <returns></returns>
         [HttpPost]
-        public IEnumerable<string> AddResrouce(params string[] resources)
+        public string AddResrouce(params string[] resources)
         {
 
             var host = _hostService.OperationCheck(HttpContext);
@@ -41,7 +41,7 @@ namespace Lycium.Authentication.Server.Controllers
             {
                 if (_resourceService.AddResources(host, resources))
                 {
-                    return _resourceService.GetAllAllowlist(host.Id);
+                    return JsonResult(_resourceService.GetAllAllowlist(host.Id));
                 }
             }
             return null;
@@ -57,9 +57,9 @@ namespace Lycium.Authentication.Server.Controllers
         /// <param name="size">页容量</param>
         /// <returns></returns>
         [HttpGet("query/{cid}/{page}/{size}")]
-        public IEnumerable<LyciumResource> Query(long cid, int page, int size)
+        public string Query(long cid, int page, int size)
         {
-            return _resourceService.Query(cid, page, size);
+            return JsonResult(_resourceService.Query(cid, page, size));
         }
 
 
@@ -69,9 +69,9 @@ namespace Lycium.Authentication.Server.Controllers
         /// <param name="cid">主机ID</param>
         /// <returns></returns>
         [HttpGet("queryall/{cid}/")]
-        public IEnumerable<LyciumResource> QueryAll(long cid)
+        public string QueryAll(long cid)
         {
-            return _resourceService.QueryAll(cid);
+            return JsonResult(_resourceService.QueryAll(cid));
         }
 
 
@@ -81,9 +81,9 @@ namespace Lycium.Authentication.Server.Controllers
         /// <param name="cid">主机ID</param>
         /// <returns></returns>
         [HttpGet("get/allowlist/id/{cid}")]
-        public IEnumerable<string> QueryAllAllowlist(long cid)
+        public string QueryAllAllowlist(long cid)
         {
-            return _resourceService.GetAllAllowlist(cid);
+            return JsonResult(_resourceService.GetAllAllowlist(cid));
         }
 
 
@@ -94,13 +94,13 @@ namespace Lycium.Authentication.Server.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("get/allowlist/secretKey")]
-        public IEnumerable<string> QueryAllAllowlist()
+        public string QueryAllAllowlist()
         {
 
             var host = _hostService.OperationCheck(HttpContext);
             if (host != null)
             {
-                return _resourceService.GetAllAllowlist(host.Id);
+                return JsonResult(_resourceService.GetAllAllowlist(host.Id));
             }
             return null;
 

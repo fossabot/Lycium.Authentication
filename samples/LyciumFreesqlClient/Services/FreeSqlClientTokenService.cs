@@ -20,6 +20,7 @@ namespace LyciumFreesqlClient.Services
 
         public override bool AddToken(LyciumToken token)
         {
+            RemoveToken(token.Uid, token.Gid);
             return _freeSql.Insert(token).ExecuteAffrows() == 1;
         }
 
@@ -35,7 +36,7 @@ namespace LyciumFreesqlClient.Services
         
         public override LyciumToken GetServerToken(long uid, long gid)
         {
-            return _request.Get<LyciumToken>("single", uid, gid);
+            return _request.Get<LyciumToken>("api/LyciumToken/single", uid, gid);
         }
 
         public override LyciumToken GetToken(long uid, long gid)
@@ -45,17 +46,28 @@ namespace LyciumFreesqlClient.Services
 
         public override LyciumToken Login(long uid, long gid)
         {
-            return _request.Get<LyciumToken>("LoginToken", uid, gid);
+            return _request.Get<LyciumToken>("api/LyciumToken/LoginToken", uid, gid);
         }
 
         public override HttpStatusCode Logout(long uid, long gid)
         {
-            return _request.Get<HttpStatusCode>("LogoutToken", uid, gid);
+            return _request.Get<HttpStatusCode>("api/LyciumToken/LogoutToken", uid, gid);
         }
 
         public override bool ModifyToken(LyciumToken token)
         {
-            return _freeSql.Update<LyciumToken>(token).Where(item => item.Uid == token.Uid && item.Gid == token.Gid).ExecuteAffrows() == 1;
+
+            var result = _freeSql.Update<LyciumToken>().SetDto(token).Where(item => item.Uid == token.Uid && item.Gid == token.Gid).ExecuteAffrows() == 1;
+            if (!result)
+            {
+                var tempToken = GetToken(token.Uid, token.Gid);
+                if (tempToken == null)
+                {
+                    result = AddToken(token);
+                }
+            }
+            return result;
+
         }
 
         public override bool ModifyTokens(IEnumerable<LyciumToken> tokens)
@@ -65,7 +77,7 @@ namespace LyciumFreesqlClient.Services
 
         public override LyciumToken RefreshToken(LyciumToken token, long uid, long gid)
         {
-            return _request.Post<LyciumToken, LyciumToken>("refresh", token, uid, gid).Result;
+            return _request.Post<LyciumToken, LyciumToken>("api/LyciumToken/refresh", token, uid, gid).Result;
         }
 
         public override bool RemoveToken(long uid, long gid)

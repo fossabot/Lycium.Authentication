@@ -11,10 +11,6 @@
         /// 客户端URL
         /// </summary>
         public string HostUrl { get; set; }
-        /// <summary>
-        /// 客户端与服务端通信的Key
-        /// </summary>
-        public string HostKey { get; set; }
 
         /// <summary>
         /// 客户端错误处理时重定向的登录页面
