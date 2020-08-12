@@ -22,7 +22,7 @@ namespace LyciumFreesqlServer.Services
         public override async Task NotifyTokensAdd(long gid, LyciumToken token)
         {
 
-            var hosts = _host.GetHostsUrlByGroupId(gid);
+            var hosts = _host.GetHostsUrlFromGroupId(gid);
             foreach (var item in hosts)
             {
                 var result = await _request.Post<LyciumToken, HttpStatusCode>(item, "api/LyciumToken/add", token);
@@ -38,7 +38,7 @@ namespace LyciumFreesqlServer.Services
         public override async Task NotifyTokensClear(long gid, long uid)
         {
 
-            var hosts = _host.GetHostsUrlByGroupId(gid);
+            var hosts = _host.GetHostsUrlFromGroupId(gid);
             foreach (var item in hosts)
             {
                 var result = await _request.Get<HttpStatusCode>(item, $"api/LyciumToken/remove/{uid}/{gid}");
@@ -53,7 +53,7 @@ namespace LyciumFreesqlServer.Services
 
         public override async Task NotifyTokensModify(long gid, LyciumToken token)
         {
-            var hosts = _host.GetHostsUrlByGroupId(gid);
+            var hosts = _host.GetHostsUrlFromGroupId(gid);
             foreach (var item in hosts)
             {
                 var result = await _request.Post<LyciumToken, HttpStatusCode>(item, "api/LyciumToken/modify", token);

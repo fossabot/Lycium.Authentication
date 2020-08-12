@@ -85,7 +85,7 @@ namespace LyciumFreesqlServer.Services
         /// </summary>
         /// <param name="gid"></param>
         /// <returns></returns>
-        public override IEnumerable<string> GetHostsUrlByGroupId(long gid)
+        public override IEnumerable<string> GetHostsUrlFromGroupId(long gid)
         {
             return _freeSql
                 .Select<LyciumHost,LyciumHostRelation>()
@@ -107,6 +107,20 @@ namespace LyciumFreesqlServer.Services
                 .Select<LyciumHostRelation>()
                 .Where(relation => relation.Cid == cid && relation.Gid == gid)
                 .First() != null;
+        }
+
+
+        /// <summary>
+        /// 根据组名获取组ID
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public override long GetGidFromGroupName(string name)
+        {
+            return _freeSql
+                .Select<LyciumHostGroup>()
+                .Where(group => group.Name == name)
+                .First(item => item.Id);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Lycium.Authentication
         /// 根据组ID获取主机
         /// </summary>
         /// <returns></returns>
-        public abstract IEnumerable<string> GetHostsUrlByGroupId(long gid);
+        public abstract IEnumerable<string> GetHostsUrlFromGroupId(long gid);
 
         /// <summary>
         /// 增加主机到群组
@@ -53,6 +53,14 @@ namespace Lycium.Authentication
         /// <param name="gid"></param>
         /// <returns></returns>
         public abstract bool IsExistHostInGroup(long cid, long gid);
+
+
+        /// <summary>
+        /// 获取组ID
+        /// </summary>
+        /// <param name="name">组名</param>
+        /// <returns></returns>
+        public abstract long GetGidFromGroupName(string name);
 
     }
 }

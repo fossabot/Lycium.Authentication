@@ -33,7 +33,12 @@ namespace LyciumFreesqlClient.Services
         {
             throw new NotImplementedException();
         }
-        
+
+        public override long GetGidFromServer(string groupName)
+        {
+            return _request.Get<long>("api/HostGroup/group/gid/query/" + groupName);
+        }
+
         public override LyciumToken GetServerToken(long uid, long gid)
         {
             return _request.Get<LyciumToken>("api/LyciumToken/single", uid, gid);

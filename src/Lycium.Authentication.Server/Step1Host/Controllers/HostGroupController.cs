@@ -62,7 +62,19 @@ namespace Lycium.Authentication.Server.Controllers
         [HttpGet("group/host/query/{gid}")]
         public string GetHosts(long gid)
         {
-            return JsonResult(_groupService.GetHostsUrlByGroupId(gid));
+            return JsonResult(_groupService.GetHostsUrlFromGroupId(gid));
+        }
+
+
+        /// <summary>
+        /// 获取该组下所有主机地址
+        /// </summary>
+        /// <param name="gid">组ID</param>
+        /// <returns></returns>
+        [HttpGet("group/gid/query/{groupName}")]
+        public long GetGidFromGroupName(string groupName)
+        {
+            return _groupService.GetGidFromGroupName(groupName);
         }
 
 

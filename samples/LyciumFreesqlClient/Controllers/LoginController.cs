@@ -16,14 +16,15 @@ namespace LyciumFreesqlClient.Controllers
         }
 
         [HttpGet("login")]
-        public LyciumToken Login(long uid,long gid)
+        public LyciumToken Login(long uid,string name)
         {
-            return _loginService.Login(uid,gid);
+
+            return _loginService.Login(uid, name);
         }
         [HttpGet("logout")]
-        public HttpStatusCode Logout(long uid, long gid)
+        public HttpStatusCode Logout(long uid, string name)
         {
-            return _loginService.Logout(uid, gid);
+            return _loginService.Logout(uid, name);
         }
 
 

@@ -13,26 +13,44 @@ public class LoginService
         _tokenService = tokenService;
         _infoService = infoService;
     }
-    public LyciumToken Login(long uid,long gid)
+    public LyciumToken Login(long uid,string groupName)
     {
-        return _tokenService.Login(uid, gid);
+        var gid =_tokenService.GetGidFromServer(groupName);
+        if (gid != 0)
+        {
+            return _tokenService.Login(uid, gid);
+        }
+        return null;
     }
-    public HttpStatusCode Logout(long uid, long gid)
+    public HttpStatusCode Logout(long uid, string groupName)
     {
-        return _tokenService.Logout(uid, gid);
+        var gid = _tokenService.GetGidFromServer(groupName);
+        if (gid != 0)
+        {
+            return _tokenService.Logout(uid, gid);
+        }
+        return HttpStatusCode.BadRequest;
     }
-    public LyciumToken Login(HttpContext context)
+    public LyciumToken Login(HttpContext context, string groupName)
     {
         var uid = _infoService.GetUidFromContext(context);
-        var gid = _infoService.GetGidFromContext(context);
-        return _tokenService.Login(uid, gid);
+        var gid = _tokenService.GetGidFromServer(groupName);
+        if (gid != 0)
+        {
+            return _tokenService.Login(uid, gid);
+        }
+        return null;
     }
 
-    public HttpStatusCode Logout(HttpContext context)
+    public HttpStatusCode Logout(HttpContext context, string groupName)
     {
         var uid = _infoService.GetUidFromContext(context);
-        var gid = _infoService.GetGidFromContext(context);
-        return _tokenService.Logout(uid, gid);
+        var gid = _tokenService.GetGidFromServer(groupName);
+        if (gid != 0)
+        {
+            return _tokenService.Logout(uid, gid);
+        }
+        return HttpStatusCode.BadRequest;
     }
 
 }

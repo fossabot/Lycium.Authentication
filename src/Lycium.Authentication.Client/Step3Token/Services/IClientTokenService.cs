@@ -25,5 +25,7 @@ namespace Lycium.Authentication
         public abstract LyciumToken GetServerToken(long uid,long gid);
         public abstract LyciumToken RefreshToken(LyciumToken tokens, long uid,long gid);
 
+        public abstract long GetGidFromServer(string groupName);
+
     }
 }
