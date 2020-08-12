@@ -1,7 +1,3 @@
-using Lycium.Authentication;
-using Lycium.Authentication.Server;
-using LyciumFreesqlServer.Request;
-using LyciumFreesqlServer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -40,15 +36,7 @@ namespace LyciumFreesqlServer
 
 
 
-            services.AddScoped<IServerConfigurationService, FreeSqlServerConfigurationService>();
-            services.AddScoped<IServerHostService, FreeSqlServerHostService>();
-            services.AddScoped<IContextInfoService, FreesqlContextInfoService>();
-            services.AddScoped<IServerResourceService, FreeSqlServerResourceService>();
-            services.AddScoped<IServerHostGroupService, FreeSqlServerHostGroupService>();
-            services.AddScoped<IServerTokenService, FreeSqlServerTokenService>();
-            services.AddScoped<IResourceNotify, HttpResourceNotify>();
-            services.AddScoped<ITokenNotify, HttpTokenNotify>();
-            services.AddScoped<LyciumRequest>();
+            services.AddLyciumAuthenticationPgSql();
 
         }
 

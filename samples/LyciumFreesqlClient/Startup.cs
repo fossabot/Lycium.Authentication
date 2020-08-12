@@ -1,17 +1,9 @@
-using Lycium.Authentication;
-using LyciumFreesqlClient.Request;
-using LyciumFreesqlClient.Services;
-using LyciumFreesqlServer.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.Text.Encodings.Web;
-using System.Text.Unicode;
 
 namespace LyciumFreesqlClient
 {
@@ -42,7 +34,7 @@ namespace LyciumFreesqlClient
             });
 
 
-            services.AddLyciumAuthentication(item => item
+            services.AddLyciumAuthenticationPgSql(item => item
                 .SetServerUrl("https://localhost:8001")
                 .SetSecretKey("fd4685a2-b78f-4dda-9d59-5d420410cf96"));
 
@@ -51,12 +43,7 @@ namespace LyciumFreesqlClient
                                                             //.UseAutoSyncStructure(true) //自动迁移实体的结构到数据库
                                                             .Build());
 
-            services.AddScoped<LyciumRequest>();
-            services.AddScoped<LoginService>();
-            services.AddScoped<IContextInfoService, FreesqlContextInfoService>();
-            services.AddScoped<IClientHostService, FreeSqlClientHostService>();
-            services.AddScoped<IClientResourceService, FreeSqlClientResourceService>();
-            services.AddScoped<IClientTokenService, FreeSqlClientTokenService>();
+            
 
 
         }

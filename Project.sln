@@ -17,15 +17,23 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Project", "samples\Project\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PgEntityToDB", "samples\PgEntityToDB\PgEntityToDB.csproj", "{163D6271-EB49-4D3F-A94D-3C9BF1F1FA34}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lycium.Authentication.Client", "src\Lycium.Authentication.Client\Lycium.Authentication.Client.csproj", "{08DE1765-91E0-49E8-B14B-BB6E1FE93AB7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lycium.Authentication.Client", "src\Lycium.Authentication\Lycium.Authentication.Client\Lycium.Authentication.Client.csproj", "{08DE1765-91E0-49E8-B14B-BB6E1FE93AB7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lycium.Authentication.Common", "src\Lycium.Authentication.Common\Lycium.Authentication.Common.csproj", "{EE028B0E-5B84-42C8-9F44-1E95FCB1A902}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lycium.Authentication.Common", "src\Lycium.Authentication\Lycium.Authentication.Common\Lycium.Authentication.Common.csproj", "{EE028B0E-5B84-42C8-9F44-1E95FCB1A902}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lycium.Authentication.Server", "src\Lycium.Authentication.Server\Lycium.Authentication.Server.csproj", "{75AD7F30-5BCA-4007-AF04-AB2A87D498A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lycium.Authentication.Server", "src\Lycium.Authentication\Lycium.Authentication.Server\Lycium.Authentication.Server.csproj", "{75AD7F30-5BCA-4007-AF04-AB2A87D498A4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BenchmarkProject", "test\BenchmarkProject\BenchmarkProject.csproj", "{F89229C1-4D52-4C17-A8A6-BDF743D7F313}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UTProject", "test\UTProject\UTProject.csproj", "{64674BF9-BDC0-4EC3-8875-8A9A890335F6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lycium.Authentication", "Lycium.Authentication", "{BEE4D736-91C1-42FF-AEDE-5D19A60C571A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lycium.Authentication.PgFreeSql", "Lycium.Authentication.PgFreeSql", "{25B0E432-5A13-4FC2-B14E-88336B4AD5B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lycium.Authentication.Client.PgFreeSql", "src\Lycium.Authentication.PgFreeSql\Lycium.Authentication.Client.PgFreeSql\Lycium.Authentication.Client.PgFreeSql.csproj", "{A9B88C63-BF0F-4E7E-98EF-4A5D08FBE553}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lycium.Authentication.Server.PgFreeSql", "src\Lycium.Authentication.PgFreeSql\Lycium.Authentication.Server.PgFreeSql\Lycium.Authentication.Server.PgFreeSql.csproj", "{D3FE6AC2-95E9-45B3-9608-FFB21C76EE47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +77,14 @@ Global
 		{64674BF9-BDC0-4EC3-8875-8A9A890335F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64674BF9-BDC0-4EC3-8875-8A9A890335F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64674BF9-BDC0-4EC3-8875-8A9A890335F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9B88C63-BF0F-4E7E-98EF-4A5D08FBE553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9B88C63-BF0F-4E7E-98EF-4A5D08FBE553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9B88C63-BF0F-4E7E-98EF-4A5D08FBE553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9B88C63-BF0F-4E7E-98EF-4A5D08FBE553}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D3FE6AC2-95E9-45B3-9608-FFB21C76EE47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D3FE6AC2-95E9-45B3-9608-FFB21C76EE47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D3FE6AC2-95E9-45B3-9608-FFB21C76EE47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D3FE6AC2-95E9-45B3-9608-FFB21C76EE47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,11 +94,15 @@ Global
 		{CB4AD781-18B7-4B82-A269-9F1CA7A06CAD} = {84977F43-7A74-4310-B07F-D4FBF5D0333F}
 		{90F3AF12-9A9A-404E-9659-C82D6C286683} = {84977F43-7A74-4310-B07F-D4FBF5D0333F}
 		{163D6271-EB49-4D3F-A94D-3C9BF1F1FA34} = {84977F43-7A74-4310-B07F-D4FBF5D0333F}
-		{08DE1765-91E0-49E8-B14B-BB6E1FE93AB7} = {C94A44E9-854C-444F-85D9-A7CBDE30F2D9}
-		{EE028B0E-5B84-42C8-9F44-1E95FCB1A902} = {C94A44E9-854C-444F-85D9-A7CBDE30F2D9}
-		{75AD7F30-5BCA-4007-AF04-AB2A87D498A4} = {C94A44E9-854C-444F-85D9-A7CBDE30F2D9}
+		{08DE1765-91E0-49E8-B14B-BB6E1FE93AB7} = {BEE4D736-91C1-42FF-AEDE-5D19A60C571A}
+		{EE028B0E-5B84-42C8-9F44-1E95FCB1A902} = {BEE4D736-91C1-42FF-AEDE-5D19A60C571A}
+		{75AD7F30-5BCA-4007-AF04-AB2A87D498A4} = {BEE4D736-91C1-42FF-AEDE-5D19A60C571A}
 		{F89229C1-4D52-4C17-A8A6-BDF743D7F313} = {6CB4B309-EE53-4223-B285-BB0713B569DA}
 		{64674BF9-BDC0-4EC3-8875-8A9A890335F6} = {6CB4B309-EE53-4223-B285-BB0713B569DA}
+		{BEE4D736-91C1-42FF-AEDE-5D19A60C571A} = {C94A44E9-854C-444F-85D9-A7CBDE30F2D9}
+		{25B0E432-5A13-4FC2-B14E-88336B4AD5B4} = {C94A44E9-854C-444F-85D9-A7CBDE30F2D9}
+		{A9B88C63-BF0F-4E7E-98EF-4A5D08FBE553} = {25B0E432-5A13-4FC2-B14E-88336B4AD5B4}
+		{D3FE6AC2-95E9-45B3-9608-FFB21C76EE47} = {25B0E432-5A13-4FC2-B14E-88336B4AD5B4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E330F2E1-7532-4657-A941-C1782EAE9D1C}
