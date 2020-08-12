@@ -113,3 +113,8 @@ Ciient 端仅需 1 张表，可以通过使用 FreeSql 进行自动生成，如�
   _loginService.Login(uid,"APP组");
   _loginService.Login(uid,"WEB组");
   ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fnight-moon-studio%2FLycium.Authentication.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fnight-moon-studio%2FLycium.Authentication?ref=badge_large)          
+      
