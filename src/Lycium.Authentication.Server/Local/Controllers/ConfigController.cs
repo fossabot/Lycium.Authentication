@@ -55,7 +55,7 @@ namespace Lycium.Authentication.Server.Controllers
         /// 配置Token刷新时间
         /// </summary>
         /// <returns></returns>
-        [HttpGet("aliveTime/{flushtimespan}")]
+        [HttpGet("flushTime/{flushtimespan}")]
         public void ConfigTokenFlushTime(long flushtimespan)
         {
             LyciumToken.GlobalFlushTimeSpan = flushtimespan;

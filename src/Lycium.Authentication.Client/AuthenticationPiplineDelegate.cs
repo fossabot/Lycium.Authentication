@@ -168,7 +168,7 @@ namespace Microsoft.Extensions.DependencyInjection
                             var serverToken = _tokenService.GetServerToken(uid, gid);
                             if (serverToken != null)
                             {
-                                if (localToken.Content == serverToken.Content)
+                                if (tokenString == serverToken.Content)
                                 {
 
                                     //将Token设置到上下文中
