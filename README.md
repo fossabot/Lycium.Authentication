@@ -5,7 +5,7 @@ Token颁发和认证组件
 
 ### 用户请求流程 
 
-    ![时序图](https://github.com/night-moon-studio/Lycium.Authentication/blob/master/images/Token%E6%97%B6%E5%BA%8F%E5%9B%BE.png)
+![时序图](https://github.com/night-moon-studio/Lycium.Authentication/blob/master/images/Token%E6%97%B6%E5%BA%8F%E5%9B%BE.png)
     
     客户端使用的仅仅是 LoginService 服务类，该类提供了登录与登出两个 API , 其他刷新以及分发 Token 均由中间件自己完成。
     
@@ -13,7 +13,7 @@ Token颁发和认证组件
 
 ### 客户端注册流程
 
-    ![时序图](https://github.com/night-moon-studio/Lycium.Authentication/blob/master/images/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%97%B6%E5%BA%8F%E5%9B%BE.png)
+![时序图](https://github.com/night-moon-studio/Lycium.Authentication/blob/master/images/%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%97%B6%E5%BA%8F%E5%9B%BE.png)
 
 
   - 只有分配了 SecretKey 的客户端主机才能与服务端进行通信，因此每个主机在接入之前需要在服务端进行配置，
