@@ -1,4 +1,5 @@
-﻿using Lycium.Authentication.Controllers;
+﻿using Lycium.Authentication.Common;
+using Lycium.Authentication.Controllers;
 using Lycium.Authentication.Server.Model;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -37,6 +38,27 @@ namespace Lycium.Authentication.Server.Controllers
         public HttpStatusCode Modify(LyciumConfig config)
         {
             return _configService.UpdateConfig(config) ? HttpStatusCode.OK : HttpStatusCode.BadRequest;
+        }
+
+
+
+        /// <summary>
+        /// 配置Token存活时间
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("aliveTime/{alivetimespan}")]
+        public void ConfigTokenAliveTime(long alivetimespan)
+        {
+            LyciumToken.GlobalAliveTimeSpan = alivetimespan;
+        }
+        /// <summary>
+        /// 配置Token刷新时间
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("aliveTime/{flushtimespan}")]
+        public void ConfigTokenFlushTime(long flushtimespan)
+        {
+            LyciumToken.GlobalFlushTimeSpan = flushtimespan;
         }
 
 
