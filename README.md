@@ -40,9 +40,9 @@ Token颁发和认证组件
 
 - 添加服务 `services.AddLyciumAuthenticationPgSql();`
 
-- 注入IFreeSql `services.AddSingleton(p => new FreeSql.FreeSqlBuilder().xxx 配置;`
+- 注入 IFreeSql `services.AddSingleton(p => new FreeSql.FreeSqlBuilder().xxx 配置;`
 
-- 注入 HttpClient   `services.AddHttpClient();`
+- 注入 HttpClient  `services.AddHttpClient();`
 
 
 
@@ -60,7 +60,7 @@ Server 端需要 6 张表，可以通过使用 FreeSql 进行自动生成，如�
  
  - LyciumHostRelation : 记录了系统ID与组ID的关联关系。
  
- - LyciumResource ： 客户端（接入的系统）在使用 LyciumClient 中间件后会扫描本地路由信息，并上传给服务端，改表记录了客户端的路由资源。
+ - LyciumResource ：客户端（接入的系统）在使用 LyciumClient 中间件后会扫描本地路由信息，并上传给服务端，改表记录了客户端的路由资源。
  
  - LyciumToken : 记录了 用户在分组下的Token。
  
