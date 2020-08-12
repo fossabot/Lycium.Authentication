@@ -1,9 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <OutputType>Library</OutputType>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>netcoreapp3.1</TargetFramework>
+		<OutputType>Library</OutputType>
+		<Product>Lycium.Authentication.Common</Product>
+		<Description>此包为 Lycium Token 服务的公共包</Description>
+		<Copyright>NMS.AzulX</Copyright>
+		<PackageId>Lycium.Authentication.Common</PackageId>
+		<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+		<PackageReleaseNotes>发布试用版</PackageReleaseNotes>
+		<Version>0.1.0</Version>
+		<IsPackable>true</IsPackable>
+		<PackageLicenseUrl>https://github.com/night-moon-studio/Lycium.Authentication/blob/master/LICENSE</PackageLicenseUrl>
+		<PackageProjectUrl>https://github.com/night-moon-studio/Lycium.Authentication</PackageProjectUrl>
+		<PackageTags>lycium;.authentication;token;</PackageTags>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<Company>NMS.AzulX</Company>
+		<PackageIconUrl>https://avatars2.githubusercontent.com/u/51699821</PackageIconUrl>
+		<Authors>NMS.AzulX</Authors>
+	</PropertyGroup>
 
 
 </Project>
